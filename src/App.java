@@ -1,63 +1,68 @@
+// import javax.xml.parsers.DocumentBuilderFactory;
+// import javax.xml.parsers.DocumentBuilder;
+// import org.w3c.dom.Document;
+// import org.w3c.dom.Element;
+// import org.w3c.dom.Node;
+// import org.w3c.dom.NodeList;
+// import java.io.File;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileReader;
-import java.io.BufferedReader;
-// import java.io.FileWriter;
-// import java.io.PrintWriter;
 
 public class App {
-    public static String extrairValorEncapsulado(String str, String primeiroDelim, String segundoDelim){
-        int beginIndex= str.indexOf(primeiroDelim) + primeiroDelim.length() - 1;
-        int endIndex = str.indexOf(segundoDelim);
-        int qtdCaracteres = endIndex - beginIndex - 1;
-        int pos = beginIndex + 1;
-        return str.substring(pos, pos+qtdCaracteres);
-    }
-
     public static void main(String[] args) throws Exception {
-        String diretorio = ".\\arquivos_jff";
-        String nomeArq = "arquivo.jff";
-        File arquivo = new File(diretorio, nomeArq);
-        if (!arquivo.exists()){
-            System.out.println("\nO arquivo não existe!\n");
-            System.exit(0);
-        }
+        ArrayList<Estado> estados = new ArrayList<Estado>();
+        ArrayList<Transicao> transicoes = new ArrayList<Transicao>();
+        Automato aut = new Automato(estados, transicoes);
+        aut.addEstado();
+        aut.addEstado();
+        aut.addEstado();
 
-        FileReader fr = new FileReader(arquivo);
-        BufferedReader br = new BufferedReader(fr);
+        aut.estados.get(0).setInicial();
+        System.out.println("\nisInicial: "+ aut.estados.get(0).isInicial() +"\n\n");
 
-        //Ler os estados e transicoes e salvar suas informacoes
-        String linha;
-        ArrayList<Integer> estados = new ArrayList<Integer>();
-        ArrayList<Integer> transicoes = new ArrayList<Integer>();
-        while (br.ready()){
-            linha = br.readLine();
-            //Estados
-            if (linha.contains("<state id")){
-                String id = extrairValorEncapsulado(linha, "id=\"", "\" name");
-                if (!id.isEmpty()){
-                    estados.add(Integer.parseInt(id));
-                }
-            //Transicoes
-            }else if (linha.contains("<from>")){
-                String valor = extrairValorEncapsulado(linha, ">", "</");
-                if (!valor.isEmpty()){
-                    transicoes.add(Integer.parseInt(valor));
+
+
+
+        /*
+        try{   
+            File file = new File(".\\atividades\\arquivos jff\\arquivo.jff");
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(file);
+            doc.getDocumentElement().normalize();
+
+            System.out.println("\nRoot element: " + doc.getDocumentElement().getNodeName());
+
+            NodeList stateList = doc.getElementsByTagName("state");
+            for (int itr = 0; itr < stateList.getLength(); itr++){
+                Node node = stateList.item(itr);
+                System.out.println("\nNode Name: " + node.getNodeName());
+                if (node.getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) node;
+                    System.out.println("id: "+ eElement.getAttribute("id"));
+                    System.out.println("nome: "+ eElement.getAttribute("name"));
+                    System.out.println("x: "+ eElement.getElementsByTagName("x").item(0).getTextContent());
+                    System.out.println("y: "+ eElement.getElementsByTagName("y").item(0).getTextContent());
+                    System.out.printf("isInitial: %b%n", eElement.getElementsByTagName("initial").item(0) != null);
                 }
             }
+
+            NodeList transitionList = doc.getElementsByTagName("transition");
+            for (int itr = 0; itr < transitionList.getLength(); itr++){
+                Node node = transitionList.item(itr);
+                System.out.println("\nNode Name: " + node.getNodeName());
+                if (node.getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) node
+                    System.out.println("origem: "+ eElement.getElementsByTagName("from").item(0).getTextContent());
+                    System.out.println("destino: "+ eElement.getElementsByTagName("to").item(0).getTextContent());
+                    String valor;
+                    System.out.printf("valor: %s%n",
+                                     (valor = eElement.getElementsByTagName("read").item(0).getTextContent()) != ""
+                                     ? valor  : "epsilon");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        fr.close();
-        br.close();
-
-
-
-        /* Escrita no arquivo
-        FileWriter fw = new FileWriter(arquivo, false);
-        PrintWriter pw = new PrintWriter(fw);
-
-        fw.close();
-        pw.close();
         */
     }
 }
