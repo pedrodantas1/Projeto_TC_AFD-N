@@ -5,19 +5,25 @@
 // import org.w3c.dom.Node;
 // import org.w3c.dom.NodeList;
 // import java.io.File;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ArrayList<Estado> estados = new ArrayList<Estado>();
-        ArrayList<Transicao> transicoes = new ArrayList<Transicao>();
-        Automato aut = new Automato(estados, transicoes);
+        Automato aut = new Automato();
+        aut.addEstado();
+        aut.addEstado();
+        aut.addEstado();
         aut.addEstado();
         aut.addEstado();
         aut.addEstado();
 
         aut.estados.get(0).setInicial();
-        System.out.println("\nisInicial: "+ aut.estados.get(0).isInicial() +"\n\n");
+        aut.estados.get(2).setFinal();
+        aut.estados.get(4).setFinal();
+        aut.estados.get(5).setFinal();
+        aut.mostrarAutomato();
+
+        //System.out.println("\nisInicial: "+ aut.estados.get(0).isInicial() +"\n\n");
 
 
 
