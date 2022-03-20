@@ -41,6 +41,4 @@ public class Transicao {
         this.valor = valor;
     }
 
-    
-    
 }
