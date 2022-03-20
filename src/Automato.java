@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class Automato {
     public ArrayList<Estado> estados;
     public ArrayList<Transicao> transicoes;
@@ -6,8 +7,8 @@ public class Automato {
     public int xAtual, yAtual;
 
     public Automato() {
-        this.estados = new ArrayList<Estado>();
-        this.transicoes = new ArrayList<Transicao>();
+        this.estados = new ArrayList<>();
+        this.transicoes = new ArrayList<>();
         this.idAtual = 0;
         //Fazer logica para posicionar de forma organizada
         this.xAtual = 100;
@@ -24,8 +25,7 @@ public class Automato {
     }
 
     public void addEstado() {
-        Estado estado = new Estado(idAtual, xAtual, yAtual);
-        this.estados.add(estado);
+        this.estados.add(new Estado(idAtual, xAtual, yAtual));
         this.idAtual++;
     }
     
@@ -37,7 +37,7 @@ public class Automato {
     }
 
     public Estado getEstadoPorId(int id) {
-        for (Estado estado : this.estados) {
+        for (Estado estado : this.estados){
             if (estado.getId() == id){
                 return estado;
             }
@@ -46,7 +46,7 @@ public class Automato {
     }
 
     public Estado getEstadoInicial() {
-        for (Estado estado : this.estados) {
+        for (Estado estado : this.estados){
             if (estado.isInicial()){
                 return estado;
             }
@@ -55,8 +55,8 @@ public class Automato {
     }
 
     public ArrayList<Estado> getEstadosFinais() {
-        ArrayList<Estado> estadosFinais = new ArrayList<Estado>();
-        for (Estado estado : this.estados) {
+        ArrayList<Estado> estadosFinais = new ArrayList<>();
+        for (Estado estado : this.estados){
             if (estado.isFinal()){
                 estadosFinais.add(estado);
             }
@@ -67,14 +67,14 @@ public class Automato {
         return null;
     }
 
-    //Ajeitar ainda
-    public void addTransicao(Transicao transicao) {
-        this.transicoes.add(transicao);
+    public void addTransicao(int origem, int destino, String valor) {
+        this.transicoes.add(new Transicao(origem, destino, valor));
     }
 
     public void removeTransicao(Transicao transicao) {
-        this.transicoes.remove(transicao);
+        if (transicoes.size() > 0){
+            this.transicoes.remove(transicao);
+        }
     }
-
     
 }
