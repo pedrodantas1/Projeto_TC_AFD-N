@@ -17,6 +17,11 @@ public class App {
         aut.addEstado();
         aut.addEstado();
 
+        aut.addTransicao(0, 1, "0");
+        aut.addTransicao(1, 3, "1");
+        aut.addTransicao(2, 1, "1");
+        aut.addTransicao(4, 2, "0");
+
         aut.estados.get(0).setInicial();
         aut.estados.get(2).setFinal();
         aut.estados.get(4).setFinal();

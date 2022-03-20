@@ -18,9 +18,12 @@ public class Automato {
     public void mostrarAutomato() {
         System.out.printf("%nAutômato:%n%n");
         System.out.printf("Estados:%n");
-        for (Estado estado : this.estados) {
+        for (Estado estado : this.estados){
             estado.mostrarEstado();
-            //Colocar transicoes quando estiverem configuradas
+        }
+        System.out.printf("Transições:%n");
+        for (Transicao transicao : this.transicoes){
+            transicao.mostrarTransicao();
         }
     }
 
@@ -76,5 +79,5 @@ public class Automato {
             this.transicoes.remove(transicao);
         }
     }
-    
+
 }
