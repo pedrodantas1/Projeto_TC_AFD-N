@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Estado {
     private int id;
@@ -6,11 +9,12 @@ public class Estado {
     private String label;
     private double x, y;
     private boolean isInitial, isFinal;
-    public ArrayList<Transicao> transicoes;
+    private ArrayList<Transicao> transicoes;
 
     public Estado() {
     }
 
+    //Cria novo estado padrao
     public Estado(int id, double x, double y) {
         this.id = id;
         //nomear de acordo com o id (q0, q1, etc)
@@ -20,6 +24,18 @@ public class Estado {
         this.y = y;
         this.isInitial = false;
         this.isFinal = false;
+        this.transicoes = new ArrayList<>(3);
+    }
+
+    //Cria novo estado a partir da leitura do .jff
+    public Estado(Element estado) {
+        this.id = Integer.parseInt(estado.getAttribute("id"));
+        this.nome = estado.getAttribute("name");
+        this.label = (estado.getAttribute("label") != "") ? estado.getAttribute("label") : null;
+        this.x = Double.parseDouble(estado.getElementsByTagName("x").item(0).getTextContent());
+        this.y = Double.parseDouble(estado.getElementsByTagName("y").item(0).getTextContent());
+        this.isInitial = estado.getElementsByTagName("initial").item(0) != null;
+        this.isFinal = estado.getElementsByTagName("final").item(0) != null;
         this.transicoes = new ArrayList<>(3);
     }
 
@@ -91,12 +107,30 @@ public class Estado {
         this.y = y;
     }
 
-    public boolean setTransicao(int destino, String valor) {
+    public void setTransicoes(NodeList listaTransicoes) {
+        for (int transicao=0; transicao<listaTransicoes.getLength(); transicao++){
+            Node node = listaTransicoes.item(transicao);
+            if (node.getNodeType() == Node.ELEMENT_NODE){
+                Element elem = (Element) node;
+                if (this.id == Integer.parseInt(elem.getElementsByTagName("from").item(0).getTextContent())){
+                    this.addTransicao(elem);
+                }
+            }
+        }
+    }
+
+    //Adicionar transicao diretamente por parametros
+    public boolean addTransicao(int destino, String valor) {
         if (!existeTransicao(destino, valor)){
             this.transicoes.add(new Transicao(this.id, destino, valor));
             return true;
         }
         return false;
+    }
+
+    //Adicionar transicao atraves da leitura do .jff
+    public boolean addTransicao(Element transition) {
+        return this.transicoes.add(new Transicao(transition));
     }
 
     public boolean removeTransicao(Transicao transicao) {

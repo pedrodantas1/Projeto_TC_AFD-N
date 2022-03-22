@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Automato {
     public ArrayList<Estado> estados;
@@ -14,17 +17,36 @@ public class Automato {
     }
 
     public void mostrarAutomato() {
-        System.out.printf("%nAutômato:%n%n");
+        System.out.printf("%nAutômato:%n");
         System.out.printf("Estados:%n");
         for (Estado estado : this.estados){
             estado.mostrarEstado();
         }
     }
 
+    public void setEstados(NodeList listaEstados) {
+        for (int estado=0; estado<listaEstados.getLength(); estado++){
+            Node node = listaEstados.item(estado);
+            if (node.getNodeType() == Node.ELEMENT_NODE){
+                Element elem = (Element) node;
+                this.addEstado(elem);
+            }
+        }
+    }
+
+    //Adicionar um estado padrao
     public Estado addEstado() {
         Estado estado = new Estado(idAtual, xAtual, yAtual);
         this.estados.add(estado);
         this.idAtual++;
+        return estado;
+    }
+
+    //Adicionar um estado que foi lido do .jff
+    public Estado addEstado(Element state) {
+        Estado estado = new Estado(state);
+        this.estados.add(estado);
+        this.idAtual = Integer.parseInt(state.getAttribute("id")) + 1; //Por enquanto deixar esse armengo
         return estado;
     }
     
@@ -90,10 +112,16 @@ public class Automato {
         return false;
     }
 
+    public void loadTransicoes(NodeList listaTransicoes) {
+        for (Estado estado : estados){
+            estado.setTransicoes(listaTransicoes);
+        }
+    }
+
     //Adiciona transicao de forma direta com os valores
     public boolean addTransicaoAoEstado(int id, int destino, String valor) {
         if (existeEstado(id)){
-            return getEstadoPorId(id).setTransicao(destino, valor);
+            return getEstadoPorId(id).addTransicao(destino, valor);
         }
         return false;
     }
@@ -102,7 +130,7 @@ public class Automato {
     public boolean addTransicaoAoEstado(Transicao transicao, Estado estado) {
         if (existeEstado(estado)){
             return getEstadoPorId(estado.getId())
-                  .setTransicao(transicao.getDestino(), transicao.getValor());
+                  .addTransicao(transicao.getDestino(), transicao.getValor());
         }
         return false;
     }
