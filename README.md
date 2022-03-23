@@ -1,18 +1,20 @@
-## Getting Started
+![Cabeçalho do projeto](../main/images/header.png)
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Descrição do projeto
 
-## Folder Structure
+Projeto desenvolvido em java sobre autômatos finitos determinísticos (AFD) e não-determinísticos (AFN), desenvolvido como trabalho da disciplina de Teoria da Computação pela Universidade Federal de Sergipe.
 
-The workspace contains two folders by default, where:
+## Abordagem utilizada
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+> O programa importa arquivos no formato `.jff`, estruturado em XML, e realiza a leitura dos dados relacionados ao autômato para, enfim, possibilitar a manipulação e realização de operações.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+> Ao finalizar as operações desejadas o programa exporta o autômato resultante em um arquivo `.jff`.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Funcionalidades presentes
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- `União`: O programa realiza a operação de união entre dois autômatos (AFD/N).
+- `Intersecção`: O programa realiza a operação de intersecção entre dois autômatos (AFD/N).
+- `Concatenação`: O programa realiza a operação de concatenação entre dois autômatos (AFD/N).
+- `Complemento`: É feita a operação de complemento em um autômato (AFD/N).
+- `Estrela`: É feita a operação de estrela (Fecho de Kleene) em um autômato (AFD/N).
+- `Gerar AFD equivalente`: Importa um AFN e gera o AFD equivalente 
