@@ -31,7 +31,8 @@ public class Estado {
     public Estado(Element estado) {
         this.id = Integer.parseInt(estado.getAttribute("id"));
         this.nome = estado.getAttribute("name");
-        this.label = (estado.getAttribute("label") != "") ? estado.getAttribute("label") : null;
+        Node label = estado.getElementsByTagName("label").item(0);
+        this.label = (label != null) ? label.getTextContent() : null;
         this.x = Double.parseDouble(estado.getElementsByTagName("x").item(0).getTextContent());
         this.y = Double.parseDouble(estado.getElementsByTagName("y").item(0).getTextContent());
         this.isInitial = estado.getElementsByTagName("initial").item(0) != null;
@@ -42,6 +43,7 @@ public class Estado {
     public void mostrarEstado() {
         System.out.printf("Estado %s:%n%n", this.nome);
         System.out.printf("id: %d%n", this.getId());
+        System.out.printf("Label: %s%n", this.getLabel());
         System.out.printf("x: %.1f - y: %.1f%n", this.getPosX(), this.getPosY());
         System.out.printf("É inicial: %b%n", this.isInicial());
         System.out.printf("É final: %b%n%n", this.isFinal());
@@ -64,6 +66,18 @@ public class Estado {
         this.id = id;
     }
     */
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public boolean isInicial() {
         return isInitial;
@@ -122,8 +136,7 @@ public class Estado {
     //Adicionar transicao diretamente por parametros
     public boolean addTransicao(int destino, String valor) {
         if (!existeTransicao(destino, valor)){
-            this.transicoes.add(new Transicao(this.id, destino, valor));
-            return true;
+            return this.transicoes.add(new Transicao(this.id, destino, valor));
         }
         return false;
     }
@@ -133,13 +146,7 @@ public class Estado {
         return this.transicoes.add(new Transicao(transition));
     }
 
-    public boolean removeTransicao(Transicao transicao) {
-        if (this.transicoes.size() > 0 && this.transicoes.remove(transicao)){
-            return true;
-        }
-        return false;
-    }
-
+    //Remover transicao atraves dos valores
     public boolean removeTransicao(int destino, String valor) {
         if (existeTransicao(destino, valor)){
             return removeTransicao(getTransicao(destino, valor));
@@ -147,6 +154,14 @@ public class Estado {
         return false;
     }
 
+    //Remover transicao atraves do objeto
+    public boolean removeTransicao(Transicao transicao) {
+        if (this.transicoes.size() > 0 && this.transicoes.remove(transicao)){
+            return true;
+        }
+        return false;
+    }
+    
     public Transicao getTransicao(int destino, String valor) {
         for (Transicao transicao : this.transicoes){
             if (transicao.getOrigem() == this.id && 
@@ -159,13 +174,10 @@ public class Estado {
     }
 
     public ArrayList<Transicao> getTransicoesAceitas() {
-        ArrayList<Transicao> transicoesEstado = new ArrayList<>();
-        for (Transicao transicao : this.transicoes){
-            if (transicao.getOrigem() == this.id){
-                transicoesEstado.add(transicao);
-            }
+        if (this.transicoes.size() > 0){
+            return this.transicoes;
         }
-        return transicoesEstado;
+        return null;
     }
 
     public boolean existeTransicao(int destino, String valor) {
