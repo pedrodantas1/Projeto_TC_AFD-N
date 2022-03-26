@@ -10,8 +10,6 @@ public class App {
         aut.setEstados(leitor.getEstados());
         aut.loadTransicoes(leitor.getTransicoes());
 
-        aut.mostrarAutomato();
-
         EscritorXML escritor = new EscritorXML(diretorio, arqSaida, aut);
         if (escritor.exportaArquivoXML()){
             System.out.println("\nArquivo exportado com sucesso!\n\n");

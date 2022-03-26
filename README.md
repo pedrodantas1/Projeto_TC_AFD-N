@@ -17,4 +17,4 @@ Projeto desenvolvido em java sobre autômatos finitos determinísticos (AFD) e n
 - `Concatenação`: O programa realiza a operação de concatenação entre dois autômatos (AFD/N).
 - `Complemento`: É feita a operação de complemento em um autômato (AFD/N).
 - `Estrela`: É feita a operação de estrela (Fecho de Kleene) em um autômato (AFD/N).
-- `Gerar AFD equivalente`: Importa um AFN e gera o AFD equivalente 
+- `Gerar AFD equivalente`: Importa um AFN e gera o AFD equivalente.

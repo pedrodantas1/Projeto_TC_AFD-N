@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Automato {
     public ArrayList<Estado> estados;
+    public SortedSet<Integer> idsUsados;
     public int idAtual;
     public int xAtual, yAtual;
 
     public Automato() {
         this.estados = new ArrayList<>();
+        this.idsUsados = new TreeSet<>();
         this.idAtual = 0;
         //Fazer logica para posicionar de forma organizada
         this.xAtual = 100;
@@ -32,13 +36,15 @@ public class Automato {
                 this.addEstado(elem);
             }
         }
+        this.idAtual = getMenorId();
     }
 
     //Adicionar um estado padrao
     public Estado addEstado() {
         Estado estado = new Estado(idAtual, xAtual, yAtual);
         this.estados.add(estado);
-        this.idAtual++;
+        idsUsados.add(idAtual);
+        this.idAtual = getMenorId();
         return estado;
     }
 
@@ -46,13 +52,29 @@ public class Automato {
     public Estado addEstado(Element state) {
         Estado estado = new Estado(state);
         this.estados.add(estado);
-        this.idAtual = Integer.parseInt(state.getAttribute("id")) + 1; //Por enquanto deixar esse armengo
+        idsUsados.add(Integer.parseInt(state.getAttribute("id")));
         return estado;
+    }
+
+    public int getMenorId() {
+        int menorId = idsUsados.first();
+        int maiorId = idsUsados.last();
+        if (menorId > 0){
+            return 0;
+        }
+        for (int id=menorId+1; id<maiorId; id++){
+            if (!idsUsados.contains(id)){
+                return id;
+            }
+        }
+        return maiorId + 1;
     }
     
     public boolean removeEstado(Estado estado) {
         if (estados.size() > 0 && this.estados.remove(estado)){
             //Deve-se remover tambem as transicoes que estao ligadas a este estado
+            idsUsados.remove(estado.getId());
+            this.idAtual = getMenorId();
             return true;
         }
         return false;
