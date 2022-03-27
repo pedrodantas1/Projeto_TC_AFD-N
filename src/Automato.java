@@ -10,14 +10,15 @@ public class Automato {
     public SortedSet<Integer> idsUsados;
     public int idAtual;
     public int xAtual, yAtual;
+    public boolean superior;
 
     public Automato() {
         this.estados = new ArrayList<>();
         this.idsUsados = new TreeSet<>();
         this.idAtual = 0;
-        //Fazer logica para posicionar de forma organizada
         this.xAtual = 100;
         this.yAtual = 125;
+        this.superior = true;
     }
 
     public void mostrarAutomato() {
@@ -37,6 +38,7 @@ public class Automato {
             }
         }
         this.idAtual = getMenorId();
+        this.yAtual = 360;
     }
 
     //Adicionar um estado padrao
@@ -45,6 +47,7 @@ public class Automato {
         this.estados.add(estado);
         idsUsados.add(idAtual);
         this.idAtual = getMenorId();
+        setPosXY();
         return estado;
     }
 
@@ -54,6 +57,16 @@ public class Automato {
         this.estados.add(estado);
         idsUsados.add(Integer.parseInt(state.getAttribute("id")));
         return estado;
+    }
+
+    public void setPosXY() {
+        this.superior = !this.superior;
+        this.xAtual += 80;
+        if (this.superior){
+            this.yAtual -= 120;
+        }else{
+            this.yAtual += 120;
+        }
     }
 
     public int getMenorId() {
@@ -142,7 +155,7 @@ public class Automato {
 
     //Adiciona transicao de forma direta com os valores
     public boolean addTransicaoAoEstado(int id, int destino, String valor) {
-        if (existeEstado(id)){
+        if (existeEstado(id) && existeEstado(destino)){
             return getEstadoPorId(id).addTransicao(destino, valor);
         }
         return false;
