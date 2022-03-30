@@ -12,6 +12,7 @@ public class Automato {
     public int xAtual, yAtual;
     public boolean superior;
 
+    //Cria um novo automato padrao
     public Automato() {
         this.estados = new ArrayList<>();
         this.idsUsados = new TreeSet<>();
@@ -21,6 +22,7 @@ public class Automato {
         this.superior = true;
     }
 
+    //Printar automato completo
     public void mostrarAutomato() {
         System.out.printf("%nAutômato:%n");
         System.out.printf("Estados:%n");
@@ -29,6 +31,7 @@ public class Automato {
         }
     }
 
+    //Carregar todos os estados extraidos do .jff
     public void setEstados(NodeList listaEstados) {
         for (int estado=0; estado<listaEstados.getLength(); estado++){
             Node node = listaEstados.item(estado);
@@ -51,7 +54,7 @@ public class Automato {
         return estado;
     }
 
-    //Adicionar um estado que foi lido do .jff
+    //Adicionar um estado que foi extraido do .jff
     public Estado addEstado(Element state) {
         Estado estado = new Estado(state);
         this.estados.add(estado);
@@ -59,6 +62,7 @@ public class Automato {
         return estado;
     }
 
+    //Seta nova posicao x e y para novo estado (paliativo)
     public void setPosXY() {
         this.superior = !this.superior;
         this.xAtual += 80;
@@ -69,6 +73,7 @@ public class Automato {
         }
     }
 
+    //Retorna o menor id disponivel para atribuicao a um novo estado
     public int getMenorId() {
         int menorId = idsUsados.first();
         int maiorId = idsUsados.last();
@@ -83,8 +88,17 @@ public class Automato {
         return maiorId + 1;
     }
     
+    //Remove um estado do automato atraves do id
+    public boolean removeEstado(int id) {
+        if (existeEstado(id)){
+            return removeEstado(getEstadoPorId(id));
+        }
+        return false;
+    }
+    
+    //Remove um estado do automato passando o objeto referido
     public boolean removeEstado(Estado estado) {
-        if (estados.size() > 0 && this.estados.remove(estado)){
+        if (this.estados.size() > 0 && this.estados.remove(estado)){
             //Deve-se remover tambem as transicoes que estao ligadas a este estado
             idsUsados.remove(estado.getId());
             this.idAtual = getMenorId();
@@ -93,36 +107,38 @@ public class Automato {
         return false;
     }
 
-    public boolean removeEstado(int id) {
-        if (existeEstado(id)){
-            return removeEstado(getEstadoPorId(id));
-        }
-        return false;
-    }
-
+    //Retorna um objeto do tipo Estado de acordo com id
     public Estado getEstadoPorId(int id) {
-        for (Estado estado : this.estados){
-            if (estado.getId() == id){
-                return estado;
+        if (this.estados.size() > 0){
+            for (Estado estado : this.estados){
+                if (estado.getId() == id){
+                    return estado;
+                }
             }
         }
         return null;
     }
 
+    //Retorna o estado inicial do automato
     public Estado getEstadoInicial() {
-        for (Estado estado : this.estados){
-            if (estado.isInicial()){
-                return estado;
+        if (this.estados.size() > 0){
+            for (Estado estado : this.estados){
+                if (estado.isInicial()){
+                    return estado;
+                }
             }
         }
         return null;
     }
 
+    //Retorna todos os estados de aceitacao do automato
     public ArrayList<Estado> getEstadosFinais() {
         ArrayList<Estado> estadosFinais = new ArrayList<>();
-        for (Estado estado : this.estados){
-            if (estado.isFinal()){
-                estadosFinais.add(estado);
+        if (this.estados.size() > 0){
+            for (Estado estado : this.estados){
+                if (estado.isFinal()){
+                    estadosFinais.add(estado);
+                }
             }
         }
         if (estadosFinais.size() > 0){
@@ -131,14 +147,7 @@ public class Automato {
         return null;
     }
 
-    public boolean existeEstado(Estado estado) {
-        Estado estado_ = getEstadoPorId(estado.getId());
-        if (estado_ != null){
-            return true;
-        }
-        return false;
-    }
-
+    //Verifica se existe o estado atraves do id
     public boolean existeEstado(int id) {
         Estado estado = getEstadoPorId(id);
         if (estado != null){
@@ -147,6 +156,12 @@ public class Automato {
         return false;
     }
 
+    //Verifica se existe o estado diretamente com objeto
+    public boolean existeEstado(Estado estado) {
+        return existeEstado(estado.getId());
+    }
+
+    //Carrega as transicoes extraidas do arquivo .jff
     public void loadTransicoes(NodeList listaTransicoes) {
         for (Estado estado : estados){
             estado.setTransicoes(listaTransicoes);
@@ -163,11 +178,8 @@ public class Automato {
 
     //Adiciona transicao com os objetos necessarios
     public boolean addTransicaoAoEstado(Transicao transicao, Estado estado) {
-        if (existeEstado(estado)){
-            return getEstadoPorId(estado.getId())
-                  .addTransicao(transicao.getDestino(), transicao.getValor());
-        }
-        return false;
+        return addTransicaoAoEstado(estado.getId(), transicao.getDestino(), 
+                                    transicao.getValor());
     }
 
 }

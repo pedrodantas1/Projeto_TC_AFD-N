@@ -11,12 +11,16 @@ public class App {
         aut.setEstados(leitor.getEstados());
         aut.loadTransicoes(leitor.getTransicoes());
 
+        aut.mostrarAutomato();
+
+        /*
         aut.addEstado().addTransicao(1, "1");
         aut.addEstado().addTransicao(3, "0");
         aut.addEstado().addTransicao(4, "1");
         aut.addEstado().addTransicao(2, "0");
         aut.addEstado().addTransicao(0, "1");
         aut.addEstado().addTransicao(5, "1");
+        */
 
         EscritorXML escritor = new EscritorXML(diretorio, arqSaida, aut);
         if (escritor.exportaArquivoXML()){

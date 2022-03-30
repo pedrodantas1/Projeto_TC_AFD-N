@@ -14,10 +14,9 @@ public class Estado {
     public Estado() {
     }
 
-    //Cria novo estado padrao
+    //Cria um estado padrao
     public Estado(int id, double x, double y) {
         this.id = id;
-        //nomear de acordo com o id (q0, q1, etc)
         this.nome = String.format("q%d", id);
         this.label = null;
         this.x = x;
@@ -27,7 +26,7 @@ public class Estado {
         this.transicoes = new ArrayList<>(3);
     }
 
-    //Cria novo estado a partir da leitura do .jff
+    //Cria um estado extraido do .jff
     public Estado(Element estado) {
         this.id = Integer.parseInt(estado.getAttribute("id"));
         this.nome = estado.getAttribute("name");
@@ -40,6 +39,7 @@ public class Estado {
         this.transicoes = new ArrayList<>(3);
     }
 
+    //Printar estado completo
     public void mostrarEstado() {
         System.out.printf("Estado %s:%n%n", this.nome);
         System.out.printf("id: %d%n", this.getId());
@@ -57,6 +57,7 @@ public class Estado {
         }
     }
 
+    //Retorna id do estado
     public int getId() {
         return id;
     }
@@ -67,60 +68,74 @@ public class Estado {
     }
     */
 
+    //Retorna nome do estado
     public String getNome() {
         return nome;
     }
 
+    //Retorna label do estado
     public String getLabel() {
         return label;
     }
 
+    //Seta label do estado
     public void setLabel(String label) {
         this.label = label;
     }
 
+    //Verifica se este estado eh inicial
     public boolean isInicial() {
         return isInitial;
     }
     
+    //Seta este estado como inicial
     public void setInicial() {
         //Se ja houver estado inicial, tira o inicial do outro e coloca nesse
         //(Pensar num metodo geral de verificacao dentro da classe Automato) 
         this.isInitial = true;
     }
 
+    //Unseta estado estado como inicial
     public void unsetInicial() {
         this.isInitial = false;
     }
 
+    //Verifica se este estado eh final
     public boolean isFinal() {
         return isFinal;
     }
 
+    //Seta este estado como final
     public void setFinal() {
         this.isFinal = true;
     }
 
+    //Unseta este estado como final
     public void unsetFinal() {
         this.isFinal = false;
     }
 
+    //Retorna a posicao x deste estado
     public double getPosX() {
         return x;
     }
 
+    //Seta a posicao x deste estado
     public void setPosX(double x) {
         this.x = x;
     }
 
+    //Retorna a posicao y deste estado
     public double getPosY() {
         return y;
     }
 
+    //Seta a posicao y deste estado
     public void setPosY(double y) {
         this.y = y;
     }
 
+    //Carregar todas as transicoes extraidos do .jff
     public void setTransicoes(NodeList listaTransicoes) {
         for (int transicao=0; transicao<listaTransicoes.getLength(); transicao++){
             Node node = listaTransicoes.item(transicao);
@@ -141,12 +156,12 @@ public class Estado {
         return false;
     }
 
-    //Adicionar transicao atraves da leitura do .jff
+    //Adicionar uma transicao que foi extraida do .jff
     public boolean addTransicao(Element transition) {
         return this.transicoes.add(new Transicao(transition));
     }
 
-    //Remover transicao atraves dos valores
+    //Remover uma transicao do automato atraves dos valores
     public boolean removeTransicao(int destino, String valor) {
         if (existeTransicao(destino, valor)){
             return removeTransicao(getTransicao(destino, valor));
@@ -154,7 +169,7 @@ public class Estado {
         return false;
     }
 
-    //Remover transicao atraves do objeto
+    //Remover uma transicao do automato passando o objeto referido
     public boolean removeTransicao(Transicao transicao) {
         if (this.transicoes.size() > 0 && this.transicoes.remove(transicao)){
             return true;
@@ -162,17 +177,21 @@ public class Estado {
         return false;
     }
     
+    //Retorna um objeto do tipo Transicao atraves dos valores
     public Transicao getTransicao(int destino, String valor) {
-        for (Transicao transicao : this.transicoes){
-            if (transicao.getOrigem() == this.id && 
-                transicao.getDestino() == destino && 
-                transicao.getValor() == valor){
-                return transicao;
+        if (this.transicoes.size() > 0){
+            for (Transicao transicao : this.transicoes){
+                if (transicao.getOrigem() == this.id && 
+                    transicao.getDestino() == destino && 
+                    transicao.getValor() == valor){
+                    return transicao;
+                }
             }
         }
         return null;
     }
 
+    //Retorna as transicoes aceitas neste estado
     public ArrayList<Transicao> getTransicoesAceitas() {
         if (this.transicoes.size() > 0){
             return this.transicoes;
@@ -180,12 +199,18 @@ public class Estado {
         return null;
     }
 
+    //Verifica se a transicao existe atraves dos valores
     public boolean existeTransicao(int destino, String valor) {
         Transicao transicao = getTransicao(destino, valor);
         if (transicao != null){
             return true;
         }
         return false;
+    }
+
+    //Verifica se existe a transicao diretamente com objeto
+    public boolean existeTransicao(Transicao transicao) {
+        return existeTransicao(transicao.getDestino(), transicao.getValor());
     }
 
 }
