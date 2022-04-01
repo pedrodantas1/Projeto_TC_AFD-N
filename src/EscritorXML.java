@@ -18,7 +18,7 @@ public class EscritorXML {
     public String diretorio;
     public String nomeArquivo;
     public Document document;
-    Automato automato;
+    public Automato automato;
 
     public EscritorXML(String diretorio, String nomeArquivo, Automato automato) {
         this.diretorio = diretorio;
