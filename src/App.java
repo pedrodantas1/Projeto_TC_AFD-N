@@ -1,3 +1,5 @@
+import org.w3c.dom.Document;
+
 public class App {
     public static String diretorio = ".\\arquivos_jff";
     public static String arqEntrada = "arquivo.jff";
@@ -6,10 +8,11 @@ public class App {
     public static void main(String[] args) throws Exception {
         Automato aut = new Automato();
         
-        LeitorXML leitor = new LeitorXML(diretorio, arqEntrada);
-        leitor.carregaDocumento();
-        aut.setEstados(leitor.getEstados());
-        aut.loadTransicoes(leitor.getTransicoes());
+        LeitorXML leitor = new LeitorXML();
+        leitor.carregaArquivoXML(diretorio, arqEntrada);
+        Document xml = leitor.getDocument();
+        aut.setEstados(xml.getElementsByTagName("state"));
+        aut.loadTransicoes(xml.getElementsByTagName("transition"));
 
         aut.mostrarAutomato();
 
