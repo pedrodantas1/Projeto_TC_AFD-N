@@ -31,10 +31,6 @@ public class App {
         
         EscritorXML escritor = new EscritorXML();
         escritor.setDocumentXML(docSaida);
-        if (escritor.exportaArquivoXML(diretorio, arqSaida)){
-            System.out.println("\nArquivo exportado com sucesso!\n\n");
-        }else{
-            System.out.println("\nNao foi possivel exportar o arquivo!\n\n");
-        }
+        escritor.exportaArquivoXML(diretorio, arqSaida);
     }
 }

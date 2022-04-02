@@ -17,7 +17,7 @@ public class EscritorXML {
         this.document = document;
     }
 
-    public boolean exportaArquivoXML(String diretorio, String nomeArquivo) {
+    public void exportaArquivoXML(String diretorio, String nomeArquivo) {
         try{
             File xml = new File(diretorio, nomeArquivo);
             TransformerFactory tf = TransformerFactory.newInstance();
@@ -26,10 +26,9 @@ public class EscritorXML {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(xml);
             transformer.transform(domSource, streamResult);
-            return true;
+            System.out.println("\nArquivo exportado com sucesso!\n\n");
         }catch (TransformerException e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("\nNao foi possivel exportar o arquivo!\n\n");
         }
     }
 }
