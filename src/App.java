@@ -10,9 +10,9 @@ public class App {
         
         LeitorXML leitor = new LeitorXML();
         leitor.carregaArquivoXML(diretorio, arqEntrada);
-        Document xml = leitor.getDocument();
-        aut.setEstados(xml.getElementsByTagName("state"));
-        aut.loadTransicoes(xml.getElementsByTagName("transition"));
+        Document docEntrada = leitor.getDocumentoLido();
+        aut.setEstados(docEntrada.getElementsByTagName("state"));
+        aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
 
         aut.mostrarAutomato();
 
@@ -25,8 +25,13 @@ public class App {
         aut.addEstado().addTransicao(5, "1");
         */
 
-        EscritorXML escritor = new EscritorXML(diretorio, arqSaida, aut);
-        if (escritor.exportaArquivoXML()){
+        ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML(aut);
+        construtorXML.configuraDocumento();
+        Document docSaida = construtorXML.getDocumentoConstruido();
+        
+        EscritorXML escritor = new EscritorXML();
+        escritor.setDocumentXML(docSaida);
+        if (escritor.exportaArquivoXML(diretorio, arqSaida)){
             System.out.println("\nArquivo exportado com sucesso!\n\n");
         }else{
             System.out.println("\nNao foi possivel exportar o arquivo!\n\n");
