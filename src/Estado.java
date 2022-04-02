@@ -48,12 +48,12 @@ public class Estado {
         System.out.printf("É inicial: %b%n", this.isInicial());
         System.out.printf("É final: %b%n%n", this.isFinal());
         System.out.printf("Transições: %n");
-        if (this.transicoes.size() > 0){
-            for (Transicao transicao : this.transicoes){
-                transicao.mostrarTransicao();
-            }
-        }else{
+        if (transicoes.size() == 0){
             System.out.printf("Sem transições!%n%n");
+            return;
+        }
+        for (Transicao transicao : transicoes){
+            transicao.mostrarTransicao();
         }
     }
 
@@ -151,14 +151,14 @@ public class Estado {
     //Adicionar transicao diretamente por parametros
     public boolean addTransicao(int destino, String valor) {
         if (!existeTransicao(destino, valor)){
-            return this.transicoes.add(new Transicao(this.id, destino, valor));
+            return transicoes.add(new Transicao(this.id, destino, valor));
         }
         return false;
     }
 
     //Adicionar uma transicao que foi extraida do .jff
     public boolean addTransicao(Element transition) {
-        return this.transicoes.add(new Transicao(transition));
+        return transicoes.add(new Transicao(transition));
     }
 
     //Remover uma transicao do automato atraves dos valores
@@ -171,7 +171,7 @@ public class Estado {
 
     //Remover uma transicao do automato passando o objeto referido
     public boolean removeTransicao(Transicao transicao) {
-        if (this.transicoes.size() > 0 && this.transicoes.remove(transicao)){
+        if (transicoes.size() > 0 && transicoes.remove(transicao)){
             return true;
         }
         return false;
@@ -179,8 +179,8 @@ public class Estado {
     
     //Retorna um objeto do tipo Transicao atraves dos valores
     public Transicao getTransicao(int destino, String valor) {
-        if (this.transicoes.size() > 0){
-            for (Transicao transicao : this.transicoes){
+        if (transicoes.size() > 0){
+            for (Transicao transicao : transicoes){
                 if (transicao.getOrigem() == this.id && 
                     transicao.getDestino() == destino && 
                     transicao.getValor() == valor){
@@ -193,8 +193,8 @@ public class Estado {
 
     //Retorna as transicoes aceitas neste estado
     public ArrayList<Transicao> getTransicoesAceitas() {
-        if (this.transicoes.size() > 0){
-            return this.transicoes;
+        if (transicoes.size() > 0){
+            return transicoes;
         }
         return null;
     }

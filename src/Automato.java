@@ -26,7 +26,7 @@ public class Automato {
     public void mostrarAutomato() {
         System.out.printf("%nAutômato:%n");
         System.out.printf("Estados:%n");
-        for (Estado estado : this.estados){
+        for (Estado estado : estados){
             estado.mostrarEstado();
         }
     }
@@ -40,16 +40,16 @@ public class Automato {
                 this.addEstado(elem);
             }
         }
-        this.idAtual = getMenorId();
-        this.yAtual = 360;
+        idAtual = getMenorId();
+        yAtual = 360;
     }
 
     //Adicionar um estado padrao
     public Estado addEstado() {
         Estado estado = new Estado(idAtual, xAtual, yAtual);
-        this.estados.add(estado);
+        estados.add(estado);
         idsUsados.add(idAtual);
-        this.idAtual = getMenorId();
+        idAtual = getMenorId();
         setPosXY();
         return estado;
     }
@@ -57,24 +57,27 @@ public class Automato {
     //Adicionar um estado que foi extraido do .jff
     public Estado addEstado(Element state) {
         Estado estado = new Estado(state);
-        this.estados.add(estado);
+        estados.add(estado);
         idsUsados.add(Integer.parseInt(state.getAttribute("id")));
         return estado;
     }
 
     //Seta nova posicao x e y para novo estado (paliativo)
     public void setPosXY() {
-        this.superior = !this.superior;
-        this.xAtual += 80;
-        if (this.superior){
-            this.yAtual -= 120;
+        superior = !superior;
+        xAtual += 80;
+        if (superior){
+            yAtual -= 120;
         }else{
-            this.yAtual += 120;
+            yAtual += 120;
         }
     }
 
     //Retorna o menor id disponivel para atribuicao a um novo estado
     public int getMenorId() {
+        if (idsUsados.size() == 0){
+            return 0;
+        }
         int menorId = idsUsados.first();
         int maiorId = idsUsados.last();
         if (menorId > 0){
@@ -98,10 +101,10 @@ public class Automato {
     
     //Remove um estado do automato passando o objeto referido
     public boolean removeEstado(Estado estado) {
-        if (this.estados.size() > 0 && this.estados.remove(estado)){
+        if (estados.size() > 0 && estados.remove(estado)){
             //Deve-se remover tambem as transicoes que estao ligadas a este estado
             idsUsados.remove(estado.getId());
-            this.idAtual = getMenorId();
+            idAtual = getMenorId();
             return true;
         }
         return false;
@@ -109,11 +112,9 @@ public class Automato {
 
     //Retorna um objeto do tipo Estado de acordo com id
     public Estado getEstadoPorId(int id) {
-        if (this.estados.size() > 0){
-            for (Estado estado : this.estados){
-                if (estado.getId() == id){
-                    return estado;
-                }
+        for (Estado estado : estados){
+            if (estado.getId() == id){
+                return estado;
             }
         }
         return null;
@@ -121,11 +122,9 @@ public class Automato {
 
     //Retorna o estado inicial do automato
     public Estado getEstadoInicial() {
-        if (this.estados.size() > 0){
-            for (Estado estado : this.estados){
-                if (estado.isInicial()){
-                    return estado;
-                }
+        for (Estado estado : estados){
+            if (estado.isInicial()){
+                return estado;
             }
         }
         return null;
@@ -134,11 +133,9 @@ public class Automato {
     //Retorna todos os estados de aceitacao do automato
     public ArrayList<Estado> getEstadosFinais() {
         ArrayList<Estado> estadosFinais = new ArrayList<>();
-        if (this.estados.size() > 0){
-            for (Estado estado : this.estados){
-                if (estado.isFinal()){
-                    estadosFinais.add(estado);
-                }
+        for (Estado estado : estados){
+            if (estado.isFinal()){
+                estadosFinais.add(estado);
             }
         }
         if (estadosFinais.size() > 0){

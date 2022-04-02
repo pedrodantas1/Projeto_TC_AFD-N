@@ -40,12 +40,12 @@
         </transition>
         <transition>
             <from>1</from>
-            <to>3</to>
+            <to>7</to>
             <read/>
         </transition>
         <transition>
             <from>1</from>
-            <to>7</to>
+            <to>3</to>
             <read/>
         </transition>
         <transition>
