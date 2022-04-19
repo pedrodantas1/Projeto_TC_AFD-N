@@ -14,16 +14,10 @@ public class App {
         aut.setEstados(docEntrada.getElementsByTagName("state"));
         aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
 
-        aut.mostrarAutomato();
+        OperacaoEstrela op = new OperacaoEstrela(aut);
+        op.realizaOperacao();
 
-        /*
-        aut.addEstado().addTransicao(1, "1");
-        aut.addEstado().addTransicao(3, "0");
-        aut.addEstado().addTransicao(4, "1");
-        aut.addEstado().addTransicao(2, "0");
-        aut.addEstado().addTransicao(0, "1");
-        aut.addEstado().addTransicao(5, "1");
-        */
+        //aut.mostrarAutomato();
 
         ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML(aut);
         construtorXML.configuraDocumento();
