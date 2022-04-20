@@ -6,11 +6,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Automato {
-    public ArrayList<Estado> estados;
-    public SortedSet<Integer> idsUsados;
-    public int idAtual;
-    public int xAtual, yAtual;
-    public boolean superior;
+    private ArrayList<Estado> estados;
+    private SortedSet<Integer> idsUsados;
+    private int idAtual;
+    private int xAtual, yAtual;
+    private boolean superior;
 
     //Cria um novo automato padrao
     public Automato() {
@@ -108,6 +108,11 @@ public class Automato {
             return true;
         }
         return false;
+    }
+
+    //Retorna a lista de todos os estados do automato
+    public ArrayList<Estado> getEstados() {
+        return estados;
     }
 
     //Retorna um objeto do tipo Estado de acordo com id

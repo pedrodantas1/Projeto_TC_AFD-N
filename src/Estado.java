@@ -90,8 +90,6 @@ public class Estado {
     
     //Seta este estado como inicial
     public void setInicial() {
-        //Se ja houver estado inicial, tira o inicial do outro e coloca nesse
-        //(Pensar num metodo geral de verificacao dentro da classe Automato) 
         this.isInitial = true;
     }
 

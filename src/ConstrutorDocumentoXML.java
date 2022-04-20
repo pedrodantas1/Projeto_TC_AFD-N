@@ -29,8 +29,8 @@ public class ConstrutorDocumentoXML {
         Element raiz = setElementoRaiz();
         setTipoEstrutura(raiz, "fa");
         Element tagAutomato = setTagAutomato(raiz);
-        setEstadosDocumento(tagAutomato, automato.estados);
-        setTransicoesDocumento(tagAutomato, automato.estados);
+        setEstadosDocumento(tagAutomato, automato.getEstados());
+        setTransicoesDocumento(tagAutomato, automato.getEstados());
     }
 
     public Element setElementoRaiz() {
