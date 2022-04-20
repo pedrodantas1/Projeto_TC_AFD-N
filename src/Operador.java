@@ -1,13 +1,34 @@
 import java.util.ArrayList;
 
-public class OperacaoEstrela {
-    private Automato automato;
+public class Operador {
+    //private Automato automato;
 
-    public OperacaoEstrela(Automato automato){
-        this.automato = automato;
+    public Operador() {
+        //this.automato = automato;
     }
 
-    public void realizaOperacao(){
+    //Realiza a operacao uniao entre dois automatos
+    public void operacaoUniao(Automato aut1, Automato aut2) {
+        //Codigo aqui
+    }
+
+    //Realiza a operacao interseccao entre dois automatos
+    public void operacaoInterseccao(Automato aut1, Automato aut2) {
+        //Codigo aqui
+    }
+
+    //Realiza a operacao concatenacao entre dois automatos
+    public void operacaoConcatenacao(Automato aut1, Automato aut2) {
+        //Codigo aqui
+    }
+
+    //Realiza a operacao complemento de um automato
+    public void operacaoComplemento(Automato automato) {
+        //Codigo aqui
+    }
+
+    //Realiza a operacao estrela no automato desejado
+    public void operacaoEstrela(Automato automato) {
         ArrayList<Estado> estadosFinais = automato.getEstadosFinais();
         if (estadosFinais == null){
             System.out.println("Não existem estados finais.");
@@ -29,6 +50,11 @@ public class OperacaoEstrela {
         for (Estado estado : estadosFinais){
             estado.addTransicao(antigoInicial.getId(), "lambda");
         }
+    }
+
+    //Converte o afn para afd
+    public void gerarAfdEquivalente(Automato automato) {
+        //Codigo aqui
     }
 
 }

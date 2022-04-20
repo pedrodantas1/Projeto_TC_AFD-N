@@ -11,6 +11,7 @@ public class Automato {
     private int idAtual;
     private int xAtual, yAtual;
     private boolean superior;
+    private Operador operacao;
 
     //Cria um novo automato padrao
     public Automato() {
@@ -20,6 +21,12 @@ public class Automato {
         this.xAtual = 100;
         this.yAtual = 125;
         this.superior = true;
+        operacao = new Operador();
+    }
+
+    //Realiza a operacao de estrela no automato
+    public void realizaEstrela(){
+        operacao.operacaoEstrela(this);
     }
 
     //Printar automato completo
