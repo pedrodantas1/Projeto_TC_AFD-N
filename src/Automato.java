@@ -21,11 +21,28 @@ public class Automato {
         this.xAtual = 100;
         this.yAtual = 125;
         this.superior = true;
-        operacao = new Operador();
+        this.operacao = new Operador();
+    }
+
+    //Cria um clone profundo do automato
+    public Automato(Automato original) {
+        this.estados = new ArrayList<>();
+        for (Estado estado : original.getEstados()){
+            this.estados.add(new Estado(estado));
+        }
+        this.idsUsados = new TreeSet<>();
+        for (Integer id : original.getIdsUsados()){
+            this.idsUsados.add(id);
+        }
+        this.idAtual = original.getIdAtual();
+        this.xAtual = original.getXAtual();
+        this.yAtual = original.getYAtual();
+        this.superior = original.getSuperior();
+        this.operacao = new Operador();
     }
 
     //Realiza a operacao de estrela no automato
-    public void realizaEstrela(){
+    public void realizaEstrela() {
         operacao.operacaoEstrela(this);
     }
 
@@ -96,6 +113,36 @@ public class Automato {
             }
         }
         return maiorId + 1;
+    }
+
+    //Retorna a lista de ids usados no automato
+    public SortedSet<Integer> getIdsUsados() {
+        return idsUsados;
+    }
+
+    //Retorna o id atual
+    public int getIdAtual() {
+        return idAtual;
+    }
+
+    //Retorna o xAtual
+    public int getXAtual() {
+        return xAtual;
+    }
+
+    //Retorna o yAtual
+    public int getYAtual() {
+        return yAtual;
+    }
+
+    //Retorna a posicao do proximo estado a ser adicionado (superior)
+    public boolean getSuperior() {
+        return superior;
+    }
+
+    //Retorna o operador
+    public Operador getOperador() {
+        return operacao;
     }
     
     //Remove um estado do automato atraves do id

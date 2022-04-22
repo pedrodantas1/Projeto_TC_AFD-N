@@ -11,9 +11,6 @@ public class Estado {
     private boolean isInitial, isFinal;
     private ArrayList<Transicao> transicoes;
 
-    public Estado() {
-    }
-
     //Cria um estado padrao
     public Estado(int id, double x, double y) {
         this.id = id;
@@ -24,6 +21,21 @@ public class Estado {
         this.isInitial = false;
         this.isFinal = false;
         this.transicoes = new ArrayList<>(3);
+    }
+
+    //Cria um clone do estado
+    public Estado(Estado estado) {
+        this.id = estado.getId();
+        this.nome = estado.getNome();
+        this.label = estado.getLabel();
+        this.x = estado.getPosX();
+        this.y = estado.getPosY();
+        this.isInitial = estado.isInicial();
+        this.isFinal = estado.isFinal();
+        this.transicoes = new ArrayList<>(3);
+        if (estado.getTransicoesAceitas() != null){
+            this.transicoes.addAll(estado.getTransicoesAceitas());
+        }
     }
 
     //Cria um estado extraido do .jff

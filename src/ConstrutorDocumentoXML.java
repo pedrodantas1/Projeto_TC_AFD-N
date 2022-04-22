@@ -10,7 +10,10 @@ public class ConstrutorDocumentoXML {
     private Automato automato;
     private Document document;
 
-    public ConstrutorDocumentoXML(Automato automato) {
+    public ConstrutorDocumentoXML() {
+    }
+
+    public void setAutomato(Automato automato) {
         this.automato = automato;
     }
 
