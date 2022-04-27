@@ -1,20 +1,38 @@
 import org.w3c.dom.Document;
 
 public class App {
-    public static String diretorio = ".\\arquivos_jff";
-    public static String arqEntrada = "arquivo.jff";
-    public static String arqClone = "clone.jff";
-    public static String arqOrig = "original.jff";
 
-    public static void main(String[] args) {
-        Automato aut = new Automato();
-        
-        //Funcao do app (retorna automato ja pronto)
+    public static void lerAutomato(Automato aut, String diretorio, String arquivo) {
         LeitorXML leitor = new LeitorXML();
-        leitor.carregaArquivoXML(diretorio, arqEntrada);
+        leitor.carregaArquivoXML(diretorio, arquivo);
         Document docEntrada = leitor.getDocumentoLido();
         aut.setEstados(docEntrada.getElementsByTagName("state"));
         aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
+    }
+
+    public static Document getDocumenXML(Automato aut) {
+        ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
+        construtorXML.setAutomato(aut);
+        construtorXML.configuraDocumento();
+        return construtorXML.getDocumentoConstruido();
+    }
+
+    public static void criarArquivoJFF(Document doc, String diretorio, String arquivo) {
+        EscritorXML escritor = new EscritorXML();
+        escritor.setDocumentXML(doc);
+        escritor.exportaArquivoXML(diretorio, arquivo);
+    }
+
+    public static void main(String[] args) {
+        String diretorio = ".\\arquivos_jff";
+        String arqEntrada = "arquivo.jff";
+        String arqClone = "clone.jff";
+        String arqOrig = "original.jff";
+
+        Automato aut = new Automato();
+        
+        //Ler automato do arquivo jff
+        lerAutomato(aut, diretorio, arqEntrada);
 
         //Usar clone do automato original para realizar as operacoes
         Automato autClonado = new Automato(aut);
@@ -25,20 +43,12 @@ public class App {
         autClonado.getEstadoPorId(3).addTransicao(3, "teste");
         aut.realizaEstrela();
 
-        //Funcao do app (retorna doc pronto)
-        ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
-        construtorXML.setAutomato(autClonado);
-        construtorXML.configuraDocumento();
-        Document docSaidaClone = construtorXML.getDocumentoConstruido();
-        construtorXML.setAutomato(aut);
-        construtorXML.configuraDocumento();
-        Document docSaidaOrig = construtorXML.getDocumentoConstruido();
+        //Construir documento xml totalmente estruturado
+        Document docSaidaClone = getDocumenXML(autClonado);
+        Document docSaidaOrig = getDocumenXML(aut);
         
-        //Funcao do app
-        EscritorXML escritor = new EscritorXML();
-        escritor.setDocumentXML(docSaidaClone);
-        escritor.exportaArquivoXML(diretorio, arqClone);
-        escritor.setDocumentXML(docSaidaOrig);
-        escritor.exportaArquivoXML(diretorio, arqOrig);
+        //Criar arquivo jff final
+        criarArquivoJFF(docSaidaClone, diretorio, arqClone);
+        criarArquivoJFF(docSaidaOrig, diretorio, arqOrig);
     }
 }
