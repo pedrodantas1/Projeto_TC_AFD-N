@@ -41,6 +41,11 @@ public class Automato {
         this.operacao = new Operador();
     }
 
+    //Realiza a operacao de interseccao no automato
+    public void realizaInterseccao(Automato aut1, Automato aut2) {
+        operacao.operacaoInterseccao(this, aut1, aut2);
+    }
+
     //Realiza a operacao de estrela no automato
     public void realizaEstrela() {
         operacao.operacaoEstrela(this);

@@ -85,6 +85,11 @@ public class Estado {
         return nome;
     }
 
+    //Seta o nome do estado
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     //Retorna label do estado
     public String getLabel() {
         return label;

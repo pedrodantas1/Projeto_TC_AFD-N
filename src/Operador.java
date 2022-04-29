@@ -13,8 +13,9 @@ public class Operador {
     }
 
     //Realiza a operacao interseccao entre dois automatos
-    public void operacaoInterseccao(Automato aut1, Automato aut2) {
-        //Codigo aqui
+    public void operacaoInterseccao(Automato autFinal, Automato aut1, Automato aut2) {
+        Interseccao operacao = new Interseccao(aut1, aut2);
+        autFinal = operacao.getResultadoFinal();
     }
 
     //Realiza a operacao concatenacao entre dois automatos
