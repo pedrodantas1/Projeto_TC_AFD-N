@@ -10,7 +10,7 @@ public class App {
         aut.loadTransicoes(docEntrada.getElementsByTagName("transition"));
     }
 
-    public static Document getDocumenXML(Automato aut) {
+    public static Document getDocumentXML(Automato aut) {
         ConstrutorDocumentoXML construtorXML = new ConstrutorDocumentoXML();
         construtorXML.setAutomato(aut);
         construtorXML.configuraDocumento();
@@ -41,14 +41,17 @@ public class App {
         autClonado.addEstado();
         autClonado.addEstado();
         autClonado.getEstadoPorId(3).addTransicao(3, "teste");
-        aut.realizaEstrela();
+
+        Operador operador = new Operador();
+        operador.operacaoEstrela(aut);
 
         //Construir documento xml totalmente estruturado
-        Document docSaidaClone = getDocumenXML(autClonado);
-        Document docSaidaOrig = getDocumenXML(aut);
+        Document docSaidaClone = getDocumentXML(autClonado);
+        Document docSaidaOrig = getDocumentXML(aut);
         
         //Criar arquivo jff final
         criarArquivoJFF(docSaidaClone, diretorio, arqClone);
         criarArquivoJFF(docSaidaOrig, diretorio, arqOrig);
     }
+    
 }

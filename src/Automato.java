@@ -11,7 +11,6 @@ public class Automato {
     private int idAtual;
     private int xAtual, yAtual;
     private boolean superior;
-    private Operador operacao;
 
     //Cria um novo automato padrao
     public Automato() {
@@ -21,7 +20,6 @@ public class Automato {
         this.xAtual = 100;
         this.yAtual = 125;
         this.superior = true;
-        this.operacao = new Operador();
     }
 
     //Cria um clone profundo do automato
@@ -38,17 +36,6 @@ public class Automato {
         this.xAtual = original.getXAtual();
         this.yAtual = original.getYAtual();
         this.superior = original.getSuperior();
-        this.operacao = new Operador();
-    }
-
-    //Realiza a operacao de interseccao no automato
-    public void realizaInterseccao(Automato aut1, Automato aut2) {
-        operacao.operacaoInterseccao(this, aut1, aut2);
-    }
-
-    //Realiza a operacao de estrela no automato
-    public void realizaEstrela() {
-        operacao.operacaoEstrela(this);
     }
 
     //Printar automato completo
@@ -143,11 +130,6 @@ public class Automato {
     //Retorna a posicao do proximo estado a ser adicionado (superior)
     public boolean getSuperior() {
         return superior;
-    }
-
-    //Retorna o operador
-    public Operador getOperador() {
-        return operacao;
     }
     
     //Remove um estado do automato atraves do id
