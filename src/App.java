@@ -21,29 +21,27 @@ public class App {
 
     public static void main(String[] args) {
         String diretorio = ".\\arquivos_jff";
-        String arqEntrada = "arquivo.jff";
-        String arqClone = "clone.jff";
-        String arqOrig = "original.jff";
+        String nomeAut1 = "automato1.jff";
+        String nomeAut2 = "automato2.jff";
+        String result = "interceccao.jff";
 
         Automato aut = new Automato();
+        Automato aut2 = new Automato();
+        Automato saida = new Automato();
         
         //Ler automato do arquivo jff
-        lerAutomato(aut, diretorio, arqEntrada);
+        lerAutomato(aut, diretorio, nomeAut1);
+        lerAutomato(aut2, diretorio, nomeAut2);
 
-        //Usar clone do automato original para realizar as operacoes
-        Automato autClonado = new Automato(aut);
-        autClonado.addEstado();
-        autClonado.addEstado();
-        autClonado.addEstado();
-        autClonado.addEstado();
-        autClonado.getEstadoPorId(3).addTransicao(3, "teste");
+        
+
+
 
         Operador operador = new Operador();
-        operador.operacaoEstrela(aut);
+        saida = operador.operacaoInterseccao(aut, aut2);
         
         //Criar arquivo jff final
-        criarArquivoJFF(autClonado, diretorio, arqClone);
-        criarArquivoJFF(aut, diretorio, arqOrig);
+        criarArquivoJFF(saida, diretorio, result);
     }
 
 }

@@ -228,4 +228,6 @@ public class Estado {
         return existeTransicao(transicao.getDestino(), transicao.getValor());
     }
 
+    
+
 }
