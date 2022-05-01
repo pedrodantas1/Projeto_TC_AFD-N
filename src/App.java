@@ -23,22 +23,25 @@ public class App {
         String diretorio = ".\\arquivos_jff";
         String nomeAut1 = "automato1.jff";
         String nomeAut2 = "automato2.jff";
-        String result = "interceccao.jff";
+        String result = "intersecçãoAFN.jff";
 
-        Automato aut = new Automato();
+        Automato aut1 = new Automato();
         Automato aut2 = new Automato();
         Automato saida = new Automato();
         
         //Ler automato do arquivo jff
-        lerAutomato(aut, diretorio, nomeAut1);
+        lerAutomato(aut1, diretorio, nomeAut1);
         lerAutomato(aut2, diretorio, nomeAut2);
 
         
 
 
-
+        //Operação para criar uma intersecção entre dois AFD
         Operador operador = new Operador();
-        saida = operador.operacaoInterseccao(aut, aut2);
+        //saida = operador.operacaoInterseccaoAFD(aut1, aut2);
+
+        //Operação para criar uma intersecção entre dois AFN
+        saida = operador.operacaoInterseccaoAFN(aut1, aut2);
         
         //Criar arquivo jff final
         criarArquivoJFF(saida, diretorio, result);

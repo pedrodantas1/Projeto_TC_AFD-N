@@ -8,10 +8,16 @@ public class Operador {
         //Codigo aqui
     }
 
-    //Realiza a operacao interseccao entre dois automatos
-    public Automato operacaoInterseccao(Automato aut1, Automato aut2) {
-        Interseccao operacao = new Interseccao(aut1, aut2);
-        return operacao.getResultadoFinal();
+    //Realiza a operacao intersecção entre dois automatos AFD
+    public Automato operacaoInterseccaoAFD(Automato aut1, Automato aut2) {
+        Interseccao operacaoAFD = new Interseccao(aut1, aut2);
+        return operacaoAFD.getResultadoFinalAFD();
+    }
+
+    //Realiza a operacao intersecção entre dois automatos AFN
+    public Automato operacaoInterseccaoAFN(Automato aut1, Automato aut2) {
+        Interseccao operacaoAFN = new Interseccao(aut1, aut2);
+        return operacaoAFN.getResutadoFinalAFN();
     }
 
     //Realiza a operacao concatenacao entre dois automatos

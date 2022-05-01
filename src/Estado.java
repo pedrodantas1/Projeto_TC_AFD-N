@@ -227,7 +227,19 @@ public class Estado {
     public boolean existeTransicao(Transicao transicao) {
         return existeTransicao(transicao.getDestino(), transicao.getValor());
     }
-
-    
-
+    //copia as trasiçoes de um estado para o outro, o cont é utulizado somente para copiar as trasiçoes de um segundo automato
+    public void copyTransition(ArrayList<Transicao> trans, int cont){
+        if (cont == 0){
+            this.transicoes = trans;
+        }
+        else{
+            this.transicoes = trans;
+            for (Transicao transicao : trans) {
+                transicao.setOrigem(transicao.getOrigem()+cont);
+                transicao.setDestino(transicao.getDestino()+cont);
+            }
+        }
+            
+        
+    }
 }
