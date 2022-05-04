@@ -26,8 +26,9 @@ public class Operador {
     }
 
     //Realiza a operacao complemento de um automato
-    public void operacaoComplemento(Automato automato) {
-        //Codigo aqui
+    public Automato operacaoComplemento(Automato aut1) {
+        Complemento operacaoComp = new Complemento(aut1);
+        return operacaoComp.GetResultadoComp();
     }
 
     //Realiza a operacao estrela no automato desejado

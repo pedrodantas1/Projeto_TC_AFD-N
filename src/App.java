@@ -41,7 +41,7 @@ public class App {
         //saida = operador.operacaoInterseccaoAFD(aut1, aut2);
 
         //Operação para criar uma intersecção entre dois AFN
-        saida = operador.operacaoInterseccaoAFN(aut1, aut2);
+        saida = operador.operacaoComplemento(aut1);
         
         //Criar arquivo jff final
         criarArquivoJFF(saida, diretorio, result);
