@@ -1,3 +1,6 @@
+package controller;
+import model.Automato;
+
 public class Operador {
 
     public Operador() {

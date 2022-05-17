@@ -1,5 +1,11 @@
 import org.w3c.dom.Document;
 
+import controller.Operador;
+import controller.xmlReader.ConstrutorDocumentoXML;
+import controller.xmlReader.EscritorXML;
+import controller.xmlReader.LeitorXML;
+import model.Automato;
+
 public class App {
 
     public static void lerAutomato(Automato aut, String diretorio, String arquivo) {

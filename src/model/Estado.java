@@ -1,3 +1,4 @@
+package model;
 import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -7,36 +8,27 @@ public class Estado {
     private int id;
     private String nome;
     private String label;
-    private double x, y;
     private boolean isInitial, isFinal;
     private ArrayList<Transicao> transicoes;
 
+    public Estado(int id, String name,String label, Boolean initialState, Boolean finalState){
+        this.id = id;
+        this.nome = name;
+        this.label = label;
+        this.isInitial = initialState;
+        this.isFinal = finalState;
+    }
+
     //Cria um estado padrao
-    public Estado(int id, double x, double y) {
+    public Estado(int id) {
         this.id = id;
         this.nome = String.format("q%d", id);
         this.label = null;
-        this.x = x;
-        this.y = y;
         this.isInitial = false;
         this.isFinal = false;
         this.transicoes = new ArrayList<>(3);
     }
 
-    //Cria um clone do estado
-    public Estado(Estado estado) {
-        this.id = estado.getId();
-        this.nome = estado.getNome();
-        this.label = estado.getLabel();
-        this.x = estado.getPosX();
-        this.y = estado.getPosY();
-        this.isInitial = estado.isInicial();
-        this.isFinal = estado.isFinal();
-        this.transicoes = new ArrayList<>(3);
-        if (estado.getTransicoesAceitas() != null){
-            this.transicoes.addAll(estado.getTransicoesAceitas());
-        }
-    }
 
     //Cria um estado extraido do .jff
     public Estado(Element estado) {
@@ -44,8 +36,6 @@ public class Estado {
         this.nome = estado.getAttribute("name");
         Node label = estado.getElementsByTagName("label").item(0);
         this.label = (label != null) ? label.getTextContent() : null;
-        this.x = Double.parseDouble(estado.getElementsByTagName("x").item(0).getTextContent());
-        this.y = Double.parseDouble(estado.getElementsByTagName("y").item(0).getTextContent());
         this.isInitial = estado.getElementsByTagName("initial").item(0) != null;
         this.isFinal = estado.getElementsByTagName("final").item(0) != null;
         this.transicoes = new ArrayList<>(3);
@@ -56,7 +46,6 @@ public class Estado {
         System.out.printf("Estado %s:%n%n", this.nome);
         System.out.printf("id: %d%n", this.getId());
         System.out.printf("Label: %s%n", this.getLabel());
-        System.out.printf("x: %.1f - y: %.1f%n", this.getPosX(), this.getPosY());
         System.out.printf("É inicial: %b%n", this.isInicial());
         System.out.printf("É final: %b%n%n", this.isFinal());
         System.out.printf("Transições: %n");
@@ -70,7 +59,7 @@ public class Estado {
     }
 
     //Retorna id do estado
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -81,12 +70,12 @@ public class Estado {
     */
 
     //Retorna nome do estado
-    public String getNome() {
+    public String getName() {
         return nome;
     }
 
     //Seta o nome do estado
-    public void setNome(String nome) {
+    public void setName(String nome) {
         this.nome = nome;
     }
 
@@ -130,25 +119,6 @@ public class Estado {
         this.isFinal = false;
     }
 
-    //Retorna a posicao x deste estado
-    public double getPosX() {
-        return x;
-    }
-
-    //Seta a posicao x deste estado
-    public void setPosX(double x) {
-        this.x = x;
-    }
-
-    //Retorna a posicao y deste estado
-    public double getPosY() {
-        return y;
-    }
-
-    //Seta a posicao y deste estado
-    public void setPosY(double y) {
-        this.y = y;
-    }
 
     //Carregar todas as transicoes extraidos do .jff
     public void setTransicoes(NodeList listaTransicoes) {
@@ -241,5 +211,11 @@ public class Estado {
         }
             
         
+    }
+
+    @Override
+    public String toString() {
+        return "Estado [finalState=" + isFinal + ", id=" + id + ", initialState=" + isInitial + ", label=" + label
+                + ", name=" + nome + "]";
     }
 }

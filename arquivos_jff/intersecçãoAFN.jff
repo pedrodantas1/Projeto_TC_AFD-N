@@ -3,20 +3,13 @@
     <type>fa</type>
     <automaton>
         <state id="0" name="q0">
-            <x>105.0</x>
-            <y>111.0</y>
             <initial/>
             <final/>
         </state>
         <state id="1" name="q1">
-            <x>249.0</x>
-            <y>111.0</y>
             <final/>
         </state>
-        <state id="2" name="q2">
-            <x>400.0</x>
-            <y>111.0</y>
-        </state>
+        <state id="2" name="q2"/>
         <transition>
             <from>0</from>
             <to>1</to>

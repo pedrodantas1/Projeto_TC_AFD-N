@@ -1,3 +1,7 @@
+package controller;
+import model.Automato;
+import model.Estado;
+
 public class Complemento {
 
 private Automato automato;
