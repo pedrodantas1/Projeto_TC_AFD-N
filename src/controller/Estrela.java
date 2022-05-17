@@ -1,4 +1,8 @@
+package controller;
 import java.util.ArrayList;
+
+import model.Automato;
+import model.Estado;
 
 public class Estrela {
     private Automato automato;

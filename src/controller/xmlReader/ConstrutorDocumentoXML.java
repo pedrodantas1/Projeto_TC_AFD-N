@@ -1,8 +1,14 @@
+package controller.xmlReader;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import model.Automato;
+import model.Estado;
+import model.Transicao;
+
 import org.w3c.dom.Attr;
 import java.util.ArrayList;
 
@@ -55,7 +61,7 @@ public class ConstrutorDocumentoXML {
     }
 
     public void setEstadosDocumento(Element noPai, ArrayList<Estado> estados) {
-        Element state, posX, posY, label, isInitial, isFinal;
+        Element state, label, isInitial, isFinal;
         for (Estado estado : estados){
             state = document.createElement("state");
             //Atributos do estado
@@ -63,15 +69,9 @@ public class ConstrutorDocumentoXML {
             id.setValue(String.valueOf(estado.getId()));
             state.setAttributeNode(id);
             Attr name = document.createAttribute("name");
-            name.setValue(estado.getNome());
+            name.setValue(estado.getName());
             state.setAttributeNode(name);
             //Nos do estado
-            posX = document.createElement("x");
-            posX.appendChild(document.createTextNode(String.format("%d.0", (int)estado.getPosX())));
-            state.appendChild(posX);
-            posY = document.createElement("y");
-            posY.appendChild(document.createTextNode(String.format("%d.0", (int)estado.getPosY())));
-            state.appendChild(posY);
             if (estado.getLabel() != null){
                 label = document.createElement("label");
                 label.appendChild(document.createTextNode(estado.getLabel()));

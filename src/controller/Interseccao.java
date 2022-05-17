@@ -1,6 +1,11 @@
+package controller;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import model.Automato;
+import model.Estado;
+import model.Transicao;
 
 public class Interseccao {
     private Automato aut1;
@@ -27,7 +32,7 @@ public class Interseccao {
         for (Estado estado1 : aut1.getEstados()) {
             ArrayList<Transicao> trans = estado1.getTransicoesAceitas();
             novoEstado = autFinal.addEstado();
-            novoEstado.setNome("q" + numEstado);
+            novoEstado.setName("q" + numEstado);
             novoEstado.copyTransition(trans, 0);
             
             if (estado1.isInicial()){
@@ -49,7 +54,7 @@ public class Interseccao {
         for (Estado estado2 : aut2.getEstados()) {
             ArrayList<Transicao> trans = estado2.getTransicoesAceitas();
             novoEstado = autFinal.addEstado();
-            novoEstado.setNome("q" + numEstado);
+            novoEstado.setName("q" + numEstado);
             novoEstado.copyTransition(trans, cont);
 
             if (estado2.isInicial()){
@@ -94,7 +99,7 @@ public class Interseccao {
         for (Estado estado : aut1.getEstados()) {
             for (Estado estado2 : aut2.getEstados()) {
                 novoEstado = autFinal.addEstado();
-                novoEstado.setNome(estado.getNome() + estado2.getNome());
+                novoEstado.setName(estado.getName() + estado2.getName());
 
                 if(estado.isInicial() && estado2.isInicial()){
                     novoEstado.setInicial();
@@ -117,8 +122,8 @@ public class Interseccao {
 
                         destino1 = getTransicao(simbolo, trans1).getDestino();
                         destino2 = getTransicao(simbolo, trans2).getDestino();
-                        String nomeDestino = getEstadoPorId(destino1, aut1).getNome() + getEstadoPorId(destino2, aut2).getNome();
-                        int idOrigem = achaId(estado.getNome()+estado2.getNome());
+                        String nomeDestino = getEstadoPorId(destino1, aut1).getName() + getEstadoPorId(destino2, aut2).getName();
+                        int idOrigem = achaId(estado.getName()+estado2.getName());
                         int idDestino = achaId(nomeDestino);
                         Estado estadoOrigem = getEstadoPorId(idOrigem, autFinal);
                         estadoOrigem.addTransicao(idDestino, simbolo);
@@ -135,7 +140,7 @@ public class Interseccao {
     private int achaId (String nome) {
 
         for (Estado estado: autFinal.getEstados()) {
-            if(nome.equals(estado.getNome())){
+            if(nome.equals(estado.getName())){
                 return estado.getId();
             }
         }

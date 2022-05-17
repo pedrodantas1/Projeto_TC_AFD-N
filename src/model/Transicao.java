@@ -1,10 +1,18 @@
+package model;
 import org.w3c.dom.Element;
 
 public class Transicao {
     private int origem, destino;
+    private Estado from, to;
     private String valor;
 
     public Transicao() {
+    }
+
+    public Transicao(Estado from, Estado to,String read){
+        this.from = from;
+        this.to = to;
+        this.valor = read;
     }
 
     //Cria uma transicao padrao
@@ -53,10 +61,28 @@ public class Transicao {
     public String getValor() {
         return valor;
     }
+/**
+ * 
+ * @return
+ */
+    public Estado getFrom() {
+        return from;
+    }
+/**
+ * 
+ * @return
+ */
+    public Estado getTo() {
+        return to;
+    }
 
     //Seta valor da transicao
     public void setValor(String valor) {
         this.valor = valor;
     }
 
+    @Override
+    public String toString() {
+        return "Transicao [from=" + this.from.getId() + ", read=" + this.valor + ", to=" + this.to.getId() + "]";
+    }
 }

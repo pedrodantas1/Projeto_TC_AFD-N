@@ -1,3 +1,4 @@
+package model;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -6,35 +7,51 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Automato {
+
+    private ArrayList<Transicao> transicoes;
+    private ArrayList<String> alfabeto;
     private ArrayList<Estado> estados;
     private SortedSet<Integer> idsUsados;
     private int idAtual;
-    private int xAtual, yAtual;
     private boolean superior;
+
+    /**
+     * Construtor utilizado pelo grupo de conversão AFN-AFD
+     * @param estado
+     * inicia o automato com um unico estado, sendo ele o estado inicial contido no Jflap
+     * @param transicao
+     * primeira transição lida pelo controller que será utilizada posteriormente, 
+     * além de adiconar a letra que é lida na lista do alfabeto do automato
+     * 
+     * a lista de alfabeto é utilizada apenas pelos desenvolvedores
+     * para fins de analise de códigos
+     */
+    public Automato(Estado estado, Transicao transicao){
+        this.estados = new ArrayList<Estado>();
+        this.alfabeto = new ArrayList<String>();
+        this.transicoes = new ArrayList<Transicao>();
+        
+        this.estados.add(estado);
+        this.transicoes.add(transicao);
+        if (!this.alfabeto.contains(transicao.getValor()) && !transicao.getValor().equals("lambda")) this.alfabeto.add(transicao.getValor());
+        
+    }
 
     //Cria um novo automato padrao
     public Automato() {
         this.estados = new ArrayList<>();
+        this.alfabeto = new ArrayList<String>();
+        this.transicoes = new ArrayList<Transicao>();
         this.idsUsados = new TreeSet<>();
         this.idAtual = 0;
-        this.xAtual = 100;
-        this.yAtual = 125;
         this.superior = true;
     }
 
     //Cria um clone profundo do automato
     public Automato(Automato original) {
-        this.estados = new ArrayList<>();
-        for (Estado estado : original.getEstados()){
-            this.estados.add(new Estado(estado));
-        }
-        this.idsUsados = new TreeSet<>();
-        for (Integer id : original.getIdsUsados()){
-            this.idsUsados.add(id);
-        }
+        this.estados.addAll(new ArrayList<>(original.getEstados()));
+        this.idsUsados.addAll(new TreeSet<>(original.getIdsUsados()));
         this.idAtual = original.getIdAtual();
-        this.xAtual = original.getXAtual();
-        this.yAtual = original.getYAtual();
         this.superior = original.getSuperior();
     }
 
@@ -57,16 +74,37 @@ public class Automato {
             }
         }
         idAtual = getMenorId();
-        yAtual = 360;
     }
 
+    /**
+     * Função que adiciona um novo estado na lista de estados do automato.
+     * Ao invés de retornar o endereço de um novo estado esse método 
+     * adiciona um novo estado no objeto do automato
+     * @param estado
+     * Novo estado a ser adicionado no automato
+     */
+    public void addEstado(Estado estado) {
+        this.estados.add(estado);  
+    }
+
+    /**
+     * Função que adiciona uma nova transição na lista de transições do automato.
+     * Ao invés de retornar o endereço de uma nova transição esse método 
+     * adiciona uma nova transição no objeto do automato
+     * @param transicao
+     * Nova transição a ser adicionada no automato
+     */
+    public void addTransicao(Transicao transicao) {
+        this.transicoes.add(transicao);
+        if (!this.alfabeto.contains(transicao.getValor()) && !transicao.getValor().equals("lambda")) this.alfabeto.add(transicao.getValor());
+    }
+    
     //Adicionar um estado padrao
     public Estado addEstado() {
-        Estado estado = new Estado(idAtual, xAtual, yAtual);
+        Estado estado = new Estado(idAtual);
         estados.add(estado);
         idsUsados.add(idAtual);
         idAtual = getMenorId();
-        setPosXY();
         return estado;
     }
 
@@ -78,16 +116,7 @@ public class Automato {
         return estado;
     }
 
-    //Seta nova posicao x e y para novo estado (paliativo)
-    public void setPosXY() {
-        superior = !superior;
-        xAtual += 80;
-        if (superior){
-            yAtual -= 120;
-        }else{
-            yAtual += 120;
-        }
-    }
+
 
     //Retorna o menor id disponivel para atribuicao a um novo estado
     public int getMenorId() {
@@ -117,16 +146,6 @@ public class Automato {
         return idAtual;
     }
 
-    //Retorna o xAtual
-    public int getXAtual() {
-        return xAtual;
-    }
-
-    //Retorna o yAtual
-    public int getYAtual() {
-        return yAtual;
-    }
-
     //Retorna a posicao do proximo estado a ser adicionado (superior)
     public boolean getSuperior() {
         return superior;
@@ -154,6 +173,24 @@ public class Automato {
     //Retorna a lista de todos os estados do automato
     public ArrayList<Estado> getEstados() {
         return estados;
+    }
+
+    /**
+     * Getter Padrão da lista de transições
+     * @return
+     * Retorna a lista de transições contidas no automato
+     */
+    public ArrayList<Transicao> getTransicoes() {
+        return transicoes;
+    }
+
+    /**
+     * Getter Padrão da lista do alfabeto da linguagem
+     * @return
+     * Retorna todas as "letras" que integram o alfabeto da linguagem
+     */
+    public ArrayList<String> getAlfabeto() {
+        return alfabeto;
     }
 
     //Retorna um objeto do tipo Estado de acordo com id
@@ -225,4 +262,9 @@ public class Automato {
                                     transicao.getValor());
     }
 
+
+    @Override
+    public String toString() {
+        return "Automato [alfabeto=" + alfabeto + ", estados=" + estados + ", transicoes=" + transicoes + "]";
+    }
 }
