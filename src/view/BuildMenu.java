@@ -43,13 +43,7 @@ public class BuildMenu extends JFrame {
         painel.add(botao2);
         
         botao.addActionListener(leAfn);
-        int teste;
-        if(retorno==1) botao1.addActionListener(converteAfn);
-        else{
-            teste = JOptionPane.showConfirmDialog(null, "O Autômato já foi convertido, deseja converter outro?", "Erro!", JOptionPane.YES_NO_OPTION);
-            System.out.println(teste);
-        } 
-       
+        botao1.addActionListener(converteAfn);
         botao2.addActionListener(salvaAfd);
 
         

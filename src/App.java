@@ -27,7 +27,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-      /*  String diretorio = ".\\arquivos_jff";
+        String diretorio = ".\\arquivos_jff";
         String nomeAut1 = "automato1.jff";
         String nomeAut2 = "automato2.jff";
         String result = "intersecçãoAFN.jff";
@@ -51,10 +51,10 @@ public class App {
         saida = operador.operacaoComplemento(aut1);
         
         //Criar arquivo jff final
-        criarArquivoJFF(saida, diretorio, result); */
+        criarArquivoJFF(saida, diretorio, result); 
 
 
-        BuildMenu teste = new BuildMenu();
+       // BuildMenu teste = new BuildMenu();
     }
 
 }
