@@ -1,4 +1,4 @@
-package controller;
+package controller.operation;
 import model.Automato;
 import model.Estado;
 

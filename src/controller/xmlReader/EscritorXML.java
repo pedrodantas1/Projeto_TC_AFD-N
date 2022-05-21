@@ -1,4 +1,5 @@
 package controller.xmlReader;
+
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -7,6 +8,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import org.w3c.dom.Document;
+
+import view.Dialogs;
 
 public class EscritorXML {
     public Document document;
@@ -18,18 +21,20 @@ public class EscritorXML {
         this.document = document;
     }
 
-    public void exportaArquivoXML(String diretorio, String nomeArquivo) {
+    public void exportaArquivoXML(String path) {
         try{
-            File xml = new File(diretorio, nomeArquivo);
+            File xml = new File(path);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(xml);
             transformer.transform(domSource, streamResult);
-            System.out.println("\nArquivo exportado com sucesso!\n\n");
+            
+            Dialogs.showMessage("Arquivo exportado com sucesso!");
         }catch (TransformerException e) {
-            System.out.println("\nNao foi possivel exportar o arquivo!\n\n");
+            Dialogs.showMessage("Erro ao exportar arquivo",
+            "Nao foi possivel exportar o arquivo!");
         }
     }
 }
