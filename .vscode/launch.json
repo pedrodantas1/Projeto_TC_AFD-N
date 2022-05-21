@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Projeto_TC_AFD-N_96ea02bf"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "E:\\Documentos\\Programacao\\Projetos_VS_Code\\Projeto_TC\\src\\Main.java"

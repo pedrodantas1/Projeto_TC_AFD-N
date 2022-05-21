@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import controller.afnReader.WriteFile;
 import model.Automato;
 import model.Estado;
 import model.StatesList;
@@ -76,7 +77,14 @@ public class ConverteAutomato {
                 id++;
         }while(!allRead());
 
-        System.out.println(afd.toString());
+        //System.out.println(afd.toString());
+        JOptionPane.showConfirmDialog(null, "Informe o local em que deseja salvar o AFD Equivalente!","AVISO",JOptionPane.OK_OPTION);
+        try {
+            WriteFile.save();
+            JOptionPane.showConfirmDialog(null, "Arquivo Salvo com sucesso!","Concluido!",JOptionPane.OK_OPTION);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao salvar o arquivo", "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
 
         return true;
     }

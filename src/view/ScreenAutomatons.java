@@ -2,12 +2,16 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import org.w3c.dom.Document;
 
+import controller.AFN_AFD.ConverteAutomato;
+import controller.afnReader.ReadFile;
 import controller.operation.*;
 import controller.xmlReader.*;
 import model.*;
@@ -31,6 +35,10 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private JPanel typeAutBox;
     private JTextField textField1;
     private JTextField textField2;
+
+    private int retorno = 1;
+    private String path;
+    JFileChooser escolhe = new JFileChooser();
 
     public static JFileChooser fileChooser;
 
@@ -135,6 +143,12 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     public void createScreenTwo() {
         createHeader();
         createBodyTwoAut();
+        createFooter();
+    }
+
+    public void createScreenTree(){
+        createHeader();
+        createBodyScreen();
         createFooter();
     }
 
@@ -334,6 +348,73 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         add(operationPanel, BorderLayout.CENTER);
     }
 
+    private void createBodyScreen(){
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Selecione apenas arquivos jff", "jff");
+        JPanel operationPanel = new JPanel(new GridBagLayout());
+        operationPanel.setBackground(Color.BLUE);
+        operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
+        JButton operacao = new JButton("<html><center>Realizar<br/>operação</center></html>");// selecionar arquivo
+
+
+        operacao.setFont(buttonFont);
+        operacao.setForeground(Color.BLACK);
+        operacao.setBorder(border);
+        operacao.setFocusPainted(false);
+        operacao.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                escolhe.setFileFilter(filter);
+                if (retorno == 0)
+                JOptionPane.showMessageDialog(null, "Arquivo já convertido!");
+
+            if (retorno == JFileChooser.SAVE_DIALOG){
+                retorno = extracted();
+                JOptionPane.showMessageDialog(null, escolhe.getSelectedFile().getAbsolutePath());
+                path = escolhe.getSelectedFile().getAbsolutePath();
+                ReadFile rf = new ReadFile(path);
+                rf.read();
+
+                if (retorno == 0)
+                    ConverteAutomato.converter();
+                else
+                    JOptionPane.showMessageDialog(null, "É necessário informar o diretório do arquivo .jff");
+
+                retorno = 1;
+            }        
+        }
+    });
+
+        gbc.fill =  GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.ipadx = 75;
+        gbc.ipady = 30;
+        gbc.weightx = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.insets.set(50, 0, 0, 80);
+        
+        operationPanel.add(operacao,gbc);
+
+
+        gbc.fill =  GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.ipadx = 40;
+        gbc.ipady = 20;
+        gbc.weightx = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.insets.set(20, 0, 0, 80);
+        operationPanel.add(backButton, gbc);
+
+        add(operationPanel, BorderLayout.CENTER);
+    }
+
+    private int extracted() {
+        return escolhe.showOpenDialog(null);   
+    }
+
     private void createFooter() {
         JPanel footer = new JPanel(new BorderLayout());
         JLabel creditos = new JLabel("<html>Desenvolvido por alunos da UFS - DSI &copy;</html>");
@@ -368,6 +449,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
+        
 
         if (action.equals("searchFile")){
             if (fileChooser == null){
@@ -388,6 +470,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
             return;
         }
+
+
 
         if (action.equals("typeAFD")){
             selectedAFD = true;
@@ -416,6 +500,9 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                         }
                     }
                 //Para as demais operações (pode necessitar de ajustes)
+                }else if (operation instanceof GerarAFD){
+                    System.out.println("passou");
+                    operation.makeOperation();
                 }else {
                     createOutputFile(operation.makeOperation());
                 }
