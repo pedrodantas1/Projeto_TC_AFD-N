@@ -1,5 +1,6 @@
 package controller;
 import model.Automato;
+import model.AutomatoUniao;
 
 public class Operador {
 
@@ -7,8 +8,9 @@ public class Operador {
     }
 
     //Realiza a operacao uniao entre dois automatos
-    public void operacaoUniao(Automato aut1, Automato aut2) {
-        //Codigo aqui
+    public AutomatoUniao operacaoUniao(AutomatoUniao aut1, AutomatoUniao aut2) {
+        Uniao uniaoAFN = new Uniao();
+        return uniaoAFN.unir(aut1, aut2);
     }
 
     //Realiza a operacao intersecção entre dois automatos AFD
