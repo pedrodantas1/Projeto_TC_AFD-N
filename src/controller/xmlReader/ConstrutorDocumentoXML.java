@@ -1,16 +1,17 @@
 package controller.xmlReader;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Attr;
+import java.util.ArrayList;
 
 import model.Automato;
 import model.Estado;
 import model.Transicao;
-
-import org.w3c.dom.Attr;
-import java.util.ArrayList;
+import view.Dialogs;
 
 public class ConstrutorDocumentoXML {
     private Automato automato;
@@ -30,7 +31,8 @@ public class ConstrutorDocumentoXML {
             this.document = db.newDocument();
             setEstruturaDocumento();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            Dialogs.showMessage("Erro ao exportar arquivo", 
+            "Não foi possível estruturar arquivo xml!");
         }
     }
 

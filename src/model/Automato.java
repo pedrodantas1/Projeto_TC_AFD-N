@@ -13,7 +13,6 @@ public class Automato {
     private ArrayList<Estado> estados;
     private SortedSet<Integer> idsUsados;
     private int idAtual;
-    private boolean superior;
 
     /**
      * Construtor utilizado pelo grupo de conversão AFN-AFD
@@ -44,15 +43,19 @@ public class Automato {
         this.transicoes = new ArrayList<Transicao>();
         this.idsUsados = new TreeSet<>();
         this.idAtual = 0;
-        this.superior = true;
     }
 
     //Cria um clone profundo do automato
     public Automato(Automato original) {
-        this.estados.addAll(new ArrayList<>(original.getEstados()));
-        this.idsUsados.addAll(new TreeSet<>(original.getIdsUsados()));
+        this.estados = new ArrayList<>();
+        for (Estado estado : original.getEstados()){
+            this.estados.add(new Estado(estado));
+        }
+        this.idsUsados = new TreeSet<>();
+        for (Integer id : original.getIdsUsados()){
+            this.idsUsados.add(id);
+        }
         this.idAtual = original.getIdAtual();
-        this.superior = original.getSuperior();
     }
 
     //Printar automato completo
@@ -116,8 +119,6 @@ public class Automato {
         return estado;
     }
 
-
-
     //Retorna o menor id disponivel para atribuicao a um novo estado
     public int getMenorId() {
         if (idsUsados.size() == 0){
@@ -144,11 +145,6 @@ public class Automato {
     //Retorna o id atual
     public int getIdAtual() {
         return idAtual;
-    }
-
-    //Retorna a posicao do proximo estado a ser adicionado (superior)
-    public boolean getSuperior() {
-        return superior;
     }
     
     //Remove um estado do automato atraves do id
@@ -262,9 +258,30 @@ public class Automato {
                                     transicao.getValor());
     }
 
-
     @Override
     public String toString() {
         return "Automato [alfabeto=" + alfabeto + ", estados=" + estados + ", transicoes=" + transicoes + "]";
     }
+
+    public boolean isAFN() {
+        for (Estado estado : getEstados()){
+            ArrayList<Transicao> auxTrans = estado.getTransicoesAceitas();
+            if (auxTrans == null){
+                continue;
+            }
+            for (Transicao transicao : auxTrans){
+                if (transicao.getValor().equals("lambda")){
+                    return true;
+                }
+                for (Transicao trans : auxTrans){
+                    if (!trans.equals(transicao) && transicao.getValor().equals(trans.getValor())){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

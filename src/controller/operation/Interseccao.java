@@ -1,26 +1,20 @@
-package controller;
+package controller.operation;
 import java.util.ArrayList;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import model.Automato;
 import model.Estado;
 import model.Transicao;
 
-public class Interseccao {
-    private Automato aut1;
-    private Automato aut2;
-    private Automato autFinal;
-    private SortedSet<String> alfabeto;
+public class Interseccao extends Operacao {
+    Automato autFinal;
 
-    public Interseccao(Automato aut1, Automato aut2) {
-        this.aut1 = aut1;
-        this.aut2 = aut2;
-        this.alfabeto = new TreeSet<>();
+    public Interseccao() {
+        maxAutomaton = 2;
+        qtdAutomaton = 0;
+        automatons = new Automato[maxAutomaton];
     }
-
     
-    public Automato getResutadoFinalAFN(){
+    public Automato makeOperation(){
         autFinal = new Automato();
         int cont = 0;
         int numEstado = 0;
@@ -29,7 +23,7 @@ public class Interseccao {
         ArrayList<Estado> antigoFinal;
 
         //Criação de estados do automato 1
-        for (Estado estado1 : aut1.getEstados()) {
+        for (Estado estado1 : getAutomaton(0).getEstados()) {
             ArrayList<Transicao> trans = estado1.getTransicoesAceitas();
             novoEstado = autFinal.addEstado();
             novoEstado.setName("q" + numEstado);
@@ -51,7 +45,7 @@ public class Interseccao {
         antigoEstadoInicial1.unsetInicial();
 
         //Criação de estados do automato 2
-        for (Estado estado2 : aut2.getEstados()) {
+        for (Estado estado2 : getAutomaton(1).getEstados()) {
             ArrayList<Transicao> trans = estado2.getTransicoesAceitas();
             novoEstado = autFinal.addEstado();
             novoEstado.setName("q" + numEstado);
@@ -90,14 +84,15 @@ public class Interseccao {
         return autFinal;
     } 
 
+    /*
     public Automato getResultadoFinalAFD() {
         autFinal = new Automato();
         Estado novoEstado;
-        verificaAlfabeto(aut1);
+        //verificaAlfabeto(getAutomaton(0));
         
         //Junção de estados
-        for (Estado estado : aut1.getEstados()) {
-            for (Estado estado2 : aut2.getEstados()) {
+        for (Estado estado : getAutomaton(0).getEstados()) {
+            for (Estado estado2 : getAutomaton(1).getEstados()) {
                 novoEstado = autFinal.addEstado();
                 novoEstado.setName(estado.getName() + estado2.getName());
 
@@ -113,16 +108,16 @@ public class Interseccao {
 
         //Criação de transições
         int destino1, destino2;
-        for (Estado estado : aut1.getEstados()) {
+        for (Estado estado : getAutomaton(0).getEstados()) {
             ArrayList<Transicao> trans1 = estado.getTransicoesAceitas();
-            for (Estado estado2 : aut2.getEstados()) {
+            for (Estado estado2 : getAutomaton(1).getEstados()) {
                 ArrayList<Transicao> trans2 = estado2.getTransicoesAceitas();
-                for (String simbolo : alfabeto) {
+                for (String simbolo : getAutomaton(0).getAlfabeto()) {
                     if(verificaTransicao(simbolo, estado, estado2)){
-
                         destino1 = getTransicao(simbolo, trans1).getDestino();
                         destino2 = getTransicao(simbolo, trans2).getDestino();
-                        String nomeDestino = getEstadoPorId(destino1, aut1).getName() + getEstadoPorId(destino2, aut2).getName();
+                        String nomeDestino = getEstadoPorId(destino1, getAutomaton(0)).getName() 
+                                            + getEstadoPorId(destino2, getAutomaton(1)).getName();
                         int idOrigem = achaId(estado.getName()+estado2.getName());
                         int idDestino = achaId(nomeDestino);
                         Estado estadoOrigem = getEstadoPorId(idOrigem, autFinal);
@@ -133,12 +128,12 @@ public class Interseccao {
             }
         }
 
-
         return autFinal;
     }
+    
 
+    
     private int achaId (String nome) {
-
         for (Estado estado: autFinal.getEstados()) {
             if(nome.equals(estado.getName())){
                 return estado.getId();
@@ -146,6 +141,7 @@ public class Interseccao {
         }
         return -1;
     }
+    
 
     private boolean verificaTransicao (String simbolo, Estado estado1, Estado estado2){
 
@@ -166,6 +162,7 @@ public class Interseccao {
 
         return existeTrans1 && existeTrans2;
     }
+    */
 
     public Transicao getTransicao(String simbolo, ArrayList<Transicao> transicoes) {
 
@@ -189,6 +186,7 @@ public class Interseccao {
         return null;
     }
 
+    /*
     public void verificaAlfabeto (Automato aut){
 
         for (Estado estado : aut.getEstados()) {
@@ -198,8 +196,9 @@ public class Interseccao {
             }
 
             for (Transicao transicao : trans) {
-                alfabeto.add(transicao.getValor());
+                getAutomaton(0).getAlfabeto().add(transicao.getValor());
             }
         }
     }
+    */
 }
