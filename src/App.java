@@ -3,13 +3,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import controller.Operador;
 import controller.xmlReader.ConstrutorDocumentoXML;
 import controller.xmlReader.EscritorXML;
 import controller.xmlReader.LeitorXML;
 import model.Automato;
 import model.AutomatoUniao;
-import model.CriarXML;
+import controller.*;
 
 public class App {
 
