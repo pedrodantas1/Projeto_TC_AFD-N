@@ -66,4 +66,93 @@ public class Uniao {
         
         return autUniao;
     }
+
+    public AutomatoUniao unirAFD(AutomatoUniao a1, AutomatoUniao a2){
+
+        List<EstadoUniao> estados = new ArrayList<>();
+        List<TransicaoUniao> transicoes = new ArrayList<>();
+        List<String> alfabeto = new ArrayList<>();
+        int id=0, idTrans;    
+        String nome;
+
+        //Pegando o alfabeto
+        for(int i=0; i<a1.getTransicoes().size(); i++){
+            if(!alfabeto.contains(a1.getTransicoes().get(i).getInput())){
+                alfabeto.add(a1.getTransicoes().get(i).getInput());
+                System.out.println(a1.getTransicoes().get(i).getInput());
+            }
+
+        }
+        //Cria os estados do novo automato combinando os estados dos automatos originais
+        for(int i=0; i<a1.getEstados().size(); i++){
+            for(int j=0; j<a2.getEstados().size(); j++){
+                EstadoUniao e = new EstadoUniao(id, a1.getEstados().get(i).getNome()+a2.getEstados().get(j).getNome(), a1.getEstados().get(i).getX(), a1.getEstados().get(i).getY(), false, false);
+                //Verifica se os dois estados são inciais
+                if(a1.getEstados().get(i).isIsInicial()){
+                    if(a2.getEstados().get(j).isIsInicial()){
+                        e.setIsInicial(true);
+                    }
+                }
+                //Verifica se um dos dois estados é final
+                if((a1.getEstados().get(i).isIsFinal()) || (a2.getEstados().get(j).isIsFinal())){
+                    e.setIsFinal(true);
+                }
+                estados.add(e);
+                id++;
+            }
+        }
+
+        //A partir de dois estados busca as suas duas transições
+        id=0;
+        for (int i=0; i<a1.getEstados().size(); i++) {
+            for (int j=0; j<a2.getEstados().size(); j++) {
+                for(int x=0; x<alfabeto.size(); x++){
+                    idTrans = buscarTrans(a1, a1.getEstados().get(i).getId(), alfabeto.get(x));
+                    nome = buscarNome(a1, idTrans);
+                    idTrans = buscarTrans(a2, a2.getEstados().get(j).getId(), alfabeto.get(x));
+                    nome = nome + buscarNome(a2, idTrans);
+                    TransicaoUniao t = new TransicaoUniao(id, buscarID(estados, nome), alfabeto.get(x));
+                    transicoes.add(t);
+                }
+                id++;
+                
+                
+            }
+        }
+
+        AutomatoUniao aUniao = new AutomatoUniao(estados, transicoes);
+        return aUniao;
+    }
+
+    //Busca o id da estado destino
+    public int buscarTrans(AutomatoUniao a, int id, String read){
+        for(int i=0; i<a.getTransicoes().size(); i++){
+            //Verifica se é o id e o simbolo que estamos procurando e retorna o id do destino
+            if((a.getTransicoes().get(i).getFrom() == id) && (a.getTransicoes().get(i).getInput()).equals(read)){
+                return a.getTransicoes().get(i).getTo();
+            }
+        }
+        return 0;
+    }
+
+    //Recebe o id de um estado, se encontrar na lista, retorna o nome do estado
+    public String buscarNome(AutomatoUniao a, int id){
+        for(int i=0; i<a.getEstados().size(); i++){
+            if(id == a.getEstados().get(i).getId()){
+                return a.getEstados().get(i).getNome();
+            }
+        }
+        return "";
+    }
+
+    //Recebe o nome de um estado, se encontrar na lista, retorna o id do estado
+    public int buscarID(List<EstadoUniao> a, String nome){
+        for(int i=0; i<a.size(); i++){
+            if(nome.equals(a.get(i).getNome())){
+                return a.get(i).getId();
+            }
+        }
+        return 0;
+    }
+
 }
