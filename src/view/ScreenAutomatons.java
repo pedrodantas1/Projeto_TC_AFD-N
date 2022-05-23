@@ -393,7 +393,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.weightx = 0;
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.insets.set(50, 0, 0, 80);
+        gbc.insets.set(50, 0, 0, 0);
         
         operationPanel.add(operacao,gbc);
 
@@ -405,7 +405,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         gbc.weightx = 0;
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.insets.set(20, 0, 0, 80);
+        gbc.insets.set(20, 0, 0, 0);
         operationPanel.add(backButton, gbc);
 
         add(operationPanel, BorderLayout.CENTER);
@@ -450,7 +450,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         
-
         if (action.equals("searchFile")){
             if (fileChooser == null){
                 fileChooser = new JFileChooser(System.getProperty("user.dir"));
@@ -470,8 +469,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
             return;
         }
-
-
 
         if (action.equals("typeAFD")){
             selectedAFD = true;

@@ -114,38 +114,31 @@ public class GridButtons extends JPanel implements ActionListener {
         ScreenAutomatons newScreen = new ScreenAutomatons(controller);
 
         if (operation.equals("complemento")){
-            //newScreen.setOperation(new Complemento(), 1);
+            newScreen.setOperation(new Complemento(), 1);
             newScreen.setTitle("Complemento de um autômato");
             newScreen.createScreenOne();
-
         }else if (operation.equals("estrela")){
             newScreen.setOperation(new Estrela(), 1);
             newScreen.setTitle("Estrela de um autômato");
             newScreen.createScreenOne();
-
         }else if (operation.equals("gerarAFD")){
             controller.dispose();
             newScreen.setOperation(new GerarAFD(), 1);
             newScreen.setTitle("Gerar AFD equivalente a um AFN");
             newScreen.createScreenTree();
-            
-            
         }else if (operation.equals("uniao")){
             //newScreen.setOperation(new Uniao(), 2);
             newScreen.setTitle("União de dois autômatos");
             newScreen.createScreenTwo();
-
         }else if (operation.equals("interseccao")){
             newScreen.setOperation(new Interseccao(), 2);
             newScreen.setTitle("Intersecção de dois autômatos");
             newScreen.createScreenTwo();
-
         }else if (operation.equals("concatenacao")){
             //newScreen.setOperation(new Concatenacao(), 2);
             newScreen.setTitle("Concatenação de dois autômatos");
             newScreen.createScreenTwo();
         }
-
         controller.setContentPane(newScreen);
         controller.setVisible(true);
     }

@@ -2,17 +2,18 @@ package controller.operation;
 import model.Automato;
 import model.Estado;
 
-public class Complemento {
-
-private Automato automato;
+public class Complemento extends Operacao {
     
-    public Complemento(Automato automato) {
-        this.automato = automato;
+    public Complemento() {
+        maxAutomaton = 1;
+        qtdAutomaton = 0;
+        automatons = new Automato[maxAutomaton];
     }
 
-    public Automato GetResultadoComp() {
+    public Automato makeOperation() {
+        Automato automato = getAutomaton(0);
 
-        for (Estado estado : this.automato.getEstados()) {
+        for (Estado estado : automato.getEstados()) {
 
             //Pega o estado final e transforma em estado normal
 
@@ -32,7 +33,8 @@ private Automato automato;
             
         }
 
-        return this.automato;
+        return automato;
 
     }
+    
 }
