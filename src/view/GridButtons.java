@@ -1,5 +1,6 @@
 package view;
 
+import controller.operation.concatenacao.GUI;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -141,9 +142,11 @@ public class GridButtons extends JPanel implements ActionListener {
             newScreen.createScreenTwo();
 
         }else if (operation.equals("concatenacao")){
-            //newScreen.setOperation(new Concatenacao(), 2);
-            newScreen.setTitle("Concatenação de dois autômatos");
-            newScreen.createScreenTwo();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+	            public void run() {
+	            	new GUI().setVisible(true);
+	            }
+	        });
         }
 
         controller.setContentPane(newScreen);
