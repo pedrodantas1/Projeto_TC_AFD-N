@@ -20,7 +20,7 @@ public class Uniao extends Operacao {
         return null;
     }
 
-    public AutomatoUniao unir(AutomatoUniao a1, AutomatoUniao a2){
+    public AutomatoUniao unirAFN(AutomatoUniao a1, AutomatoUniao a2){
         List<EstadoUniao> EstadosUniao = new ArrayList<>();
         List<TransicaoUniao> transicaoUniao = new ArrayList<>();
         

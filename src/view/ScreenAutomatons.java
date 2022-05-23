@@ -560,13 +560,17 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     private void makeUniao() {
         AutomatoUniao automato = new AutomatoUniao(textField1.getText());
         AutomatoUniao automato2 = new AutomatoUniao(textField2.getText());
-        Uniao uniaoAFN = new Uniao();
+        Uniao uniao = new Uniao();
         CriarXML criar = new CriarXML();
         int returnVal = fileChooser.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
             String filePath = getPathOutputFile(file);
-            criar.gerarXML(uniaoAFN.unir(automato, automato2), filePath);
+            if (selectedAFD){
+                criar.gerarXML(uniao.unirAFD(automato, automato2), filePath);
+            }else{
+                criar.gerarXML(uniao.unirAFN(automato, automato2), filePath);
+            }
         }
     }
 
