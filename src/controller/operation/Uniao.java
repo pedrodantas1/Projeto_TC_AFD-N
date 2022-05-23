@@ -6,7 +6,20 @@ import model.TransicaoUniao;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Uniao {
+import model.Automato;
+
+public class Uniao extends Operacao {
+
+    public Uniao() {
+        maxAutomaton = 2;
+        qtdAutomaton = 0;
+        automatons = new Automato[maxAutomaton];
+    }
+
+    public Automato makeOperation(){
+        return null;
+    }
+
     public AutomatoUniao unir(AutomatoUniao a1, AutomatoUniao a2){
         List<EstadoUniao> EstadosUniao = new ArrayList<>();
         List<TransicaoUniao> transicaoUniao = new ArrayList<>();

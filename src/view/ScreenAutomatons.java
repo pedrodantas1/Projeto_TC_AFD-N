@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import org.w3c.dom.Document;
 
+import controller.CriarXML;
 import controller.AFN_AFD.ConverteAutomato;
 import controller.afnReader.ReadFile;
 import controller.operation.*;
@@ -485,8 +486,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 createOutputFile(operation.makeOperation());
             //Para as operações que exigem 2 autômatos
             }else if (requiredAutomata == 2 && selectedAutomata == 2){
+                //Adaptações para a operação de união
+                if (operation instanceof Uniao){
+                    makeUniao();
                 //Adaptações para a operação de intersecção
-                if (operation instanceof Interseccao){
+                }else if (operation instanceof Interseccao){
                     if (selectedAFD){
                         makeInterseccaoAFD();
                     }else{
@@ -496,10 +500,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                             Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
                         }
                     }
-                //Para as demais operações (pode necessitar de ajustes)
+                //Adaptações para a operação de gerar AFD
                 }else if (operation instanceof GerarAFD){
                     System.out.println("passou");
                     operation.makeOperation();
+                //Para demais operações (exceto concatenação)
                 }else {
                     createOutputFile(operation.makeOperation());
                 }
@@ -550,6 +555,19 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         }
 
         return file.getAbsolutePath() + ".jff";
+    }
+
+    private void makeUniao() {
+        AutomatoUniao automato = new AutomatoUniao(textField1.getText());
+        AutomatoUniao automato2 = new AutomatoUniao(textField2.getText());
+        Uniao uniaoAFN = new Uniao();
+        CriarXML criar = new CriarXML();
+        int returnVal = fileChooser.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            String filePath = getPathOutputFile(file);
+            criar.gerarXML(uniaoAFN.unir(automato, automato2), filePath);
+        }
     }
 
     private void makeInterseccaoAFD() {

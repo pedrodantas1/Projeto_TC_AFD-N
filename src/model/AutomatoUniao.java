@@ -25,8 +25,12 @@ public final class AutomatoUniao {
     private List<EstadoUniao> Estados = new ArrayList<>();
     private List<TransicaoUniao> transicoes = new ArrayList<>();
 
-    public AutomatoUniao(String filePath) throws ParserConfigurationException, SAXException {
-        this.getFromFile(filePath);
+    public AutomatoUniao(String filePath) {
+        try{
+            this.getFromFile(filePath);
+        }catch (ParserConfigurationException | SAXException error){
+            System.out.println(error);
+        }
     }
 
     public AutomatoUniao(List<EstadoUniao> Estados, List<TransicaoUniao> transicao) {

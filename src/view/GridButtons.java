@@ -128,7 +128,7 @@ public class GridButtons extends JPanel implements ActionListener {
             newScreen.setTitle("Gerar AFD equivalente a um AFN");
             newScreen.createScreenTree();
         }else if (operation.equals("uniao")){
-            //newScreen.setOperation(new Uniao(), 2);
+            newScreen.setOperation(new Uniao(), 2);
             newScreen.setTitle("União de dois autômatos");
             newScreen.createScreenTwo();
         }else if (operation.equals("interseccao")){

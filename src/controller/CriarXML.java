@@ -17,6 +17,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import model.AutomatoUniao;
+import view.Dialogs;
+import view.JFLAPExecutor;
 
 /**
  *
@@ -24,7 +26,7 @@ import model.AutomatoUniao;
  */
 public class CriarXML {
    
-    public void gerarXML(AutomatoUniao a1){
+    public void gerarXML(AutomatoUniao a1, String filePath){
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -101,8 +103,10 @@ public class CriarXML {
 
             DOMSource documentoFonte = new DOMSource(documentXML);
             
-            StreamResult documentoFinal = new StreamResult(new File("AfnUniao.jff"));
+            StreamResult documentoFinal = new StreamResult(new File(filePath));
             transformer.transform(documentoFonte, documentoFinal);
+            Dialogs.showMessage("Arquivo exportado com sucesso!");
+            JFLAPExecutor.openJFLAP();
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(CriarXML.class.getName()).log(Level.SEVERE, null, ex);
