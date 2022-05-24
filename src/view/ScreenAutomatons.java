@@ -131,8 +131,8 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         typeAutBox.add(afnButton);
         typeAutBox.add(Box.createRigidArea(new Dimension(10, 0)));
         typeAutBox.setBorder(BorderFactory.createCompoundBorder(
-                             BorderFactory.createRaisedBevelBorder(),
-                             BorderFactory.createLoweredBevelBorder()));
+                            BorderFactory.createRaisedBevelBorder(),
+                            BorderFactory.createLoweredBevelBorder()));
     }
 
     public void createScreenOne() {
@@ -241,12 +241,14 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
 
         //Config do typeAutBox
-        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.insets = new Insets(0, 0, 20, 0);
-        operationPanel.add(typeAutBox, gbc);
+        if (operation instanceof Uniao){
+            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 2;
+            gbc.insets = new Insets(0, 0, 20, 0);
+            operationPanel.add(typeAutBox, gbc);
+        }
 
         //Label 1
         textFont = new Font("Arial", Font.BOLD, 18);
@@ -429,12 +431,14 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
         add(footer, BorderLayout.SOUTH);
     }
 
+    /*
     private boolean areBothAFD() {
         boolean firstIsAFN = operation.getAutomaton(0).isAFN();
         boolean secondIsAFN = operation.getAutomaton(1).isAFN();
 
         return !firstIsAFN && !secondIsAFN;
     }
+    */
 
     private int verifySelectedAut() {
         int quant = 1;
@@ -489,23 +493,11 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 //Adaptações para a operação de união
                 if (operation instanceof Uniao){
                     makeUniao();
-                //Adaptações para a operação de intersecção
-                }else if (operation instanceof Interseccao){
-                    if (selectedAFD){
-                        makeInterseccaoAFD();
-                    }else{
-                        if (areBothAFD()){
-                            createOutputFile(operation.makeOperation());
-                        }else{
-                            Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
-                        }
-                    }
                 //Adaptações para a operação de gerar AFD
                 }else if (operation instanceof GerarAFD){
-                    System.out.println("passou");
                     operation.makeOperation();
                 //Para demais operações (exceto concatenação)
-                }else {
+                }else{
                     createOutputFile(operation.makeOperation());
                 }
             //Caso não haja os autômatos necessários selecionados
@@ -570,24 +562,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 criar.gerarXML(uniao.unirAFD(automato, automato2), filePath);
             }else{
                 criar.gerarXML(uniao.unirAFN(automato, automato2), filePath);
-            }
-        }
-    }
-
-    private void makeInterseccaoAFD() {
-        String aut1 = textField1.getText();
-        String aut2 = textField2.getText();
-        int returnVal = fileChooser.showSaveDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION){
-            File file = fileChooser.getSelectedFile();
-            String autSaida = getPathOutputFile(file);
-            try {
-                InterseccaoAFD inter = new InterseccaoAFD(aut1, aut2, autSaida);
-                inter.juntarAFD();
-                Dialogs.showMessage("Arquivo exportado com sucesso!");
-                JFLAPExecutor.openJFLAP();
-            }catch (Exception e){
-                Dialogs.showMessage("Ambos os autômatos precisam ser AFD!");
             }
         }
     }
