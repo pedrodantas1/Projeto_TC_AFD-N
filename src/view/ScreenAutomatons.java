@@ -372,22 +372,22 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
                 if (retorno == 0)
                 JOptionPane.showMessageDialog(null, "Arquivo já convertido!");
 
-            if (retorno == JFileChooser.SAVE_DIALOG){
-                retorno = extracted();
-                JOptionPane.showMessageDialog(null, escolhe.getSelectedFile().getAbsolutePath());
-                path = escolhe.getSelectedFile().getAbsolutePath();
-                ReadFile rf = new ReadFile(path);
-                rf.read();
+                if (retorno == JFileChooser.SAVE_DIALOG){
+                    retorno = extracted();
+                    JOptionPane.showMessageDialog(null, escolhe.getSelectedFile().getAbsolutePath());
+                    path = escolhe.getSelectedFile().getAbsolutePath();
+                    ReadFile rf = new ReadFile(path);
+                    rf.read();
 
-                if (retorno == 0)
-                    ConverteAutomato.converter();
-                else
-                    JOptionPane.showMessageDialog(null, "É necessário informar o diretório do arquivo .jff");
+                    if (retorno == 0)
+                        ConverteAutomato.converter();
+                    else
+                        JOptionPane.showMessageDialog(null, "É necessário informar o diretório do arquivo .jff");
 
-                retorno = 1;
-            }        
-        }
-    });
+                    retorno = 1;
+                }
+            }
+        });
 
         gbc.fill =  GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;

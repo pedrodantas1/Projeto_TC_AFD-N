@@ -29,10 +29,10 @@ public class GUI extends javax.swing.JFrame {
         this.pathSave = new String();
 		
 		JFrame frame = new JFrame();
-		ImageIcon logo = new ImageIcon((System.getProperty("user.dir")+"\\logo.png"));
+		ImageIcon logo = new ImageIcon(getClass().getResource("/resources/images/logo.png"));
 		frame.setIconImage(logo.getImage());
 		
-		ImageIcon exit = new ImageIcon((System.getProperty("user.dir")+"\\exit.png"));
+		ImageIcon exit = new ImageIcon(getClass().getResource("/resources/images/exit.png"));
 		Image e1 = exit.getImage(); // transform it 
 		Image e2 = e1.getScaledInstance(40, 50,  java.awt.Image.SCALE_SMOOTH);
 		exit = new ImageIcon(e2);
@@ -70,7 +70,7 @@ public class GUI extends javax.swing.JFrame {
 		b5.addActionListener(e -> System.exit(0));
 	
 		
-		ImageIcon img = new ImageIcon((System.getProperty("user.dir")+"\\ufs.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("/resources/images/ufs.png"));
 		JLabel ufs = new JLabel();
 		ufs.setIcon(img);
 		ufs.setBounds(100, -20, 300, 225);
