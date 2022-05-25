@@ -14,6 +14,9 @@ public class AppInterface extends JFrame {
         setResizable(false);
         setSize(900, 600);
         setLocationRelativeTo(null);
+        ImageIcon logo = new ImageIcon(getClass().getResource("/resources/images/mainLogo.png"));
+        Image editedLogo = logo.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        setIconImage(editedLogo);
     }
 
     public JPanel createHomeScreen() {
