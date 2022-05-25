@@ -6,8 +6,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class Automato {
 
+/**
+ * Implementação da modelagem do autômato padrão do sistema.
+ * 
+ * 
+ * @author Pedro Dantas
+ * @author Tiago Santiago
+ */
+public class Automato {
     private ArrayList<Transicao> transicoes;
     private ArrayList<String> alfabeto;
     private ArrayList<Estado> estados;

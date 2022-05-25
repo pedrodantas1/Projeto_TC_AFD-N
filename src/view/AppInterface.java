@@ -1,10 +1,25 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import java.awt.Image;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
 
-import java.awt.*;
 
+/**
+ * Frame principal da interface responsável pelas configurações iniciais do
+ * sistema e por guardar a tela inicial.
+ * 
+ * 
+ * @author Pedro Dantas
+ */
 public class AppInterface extends JFrame {
     private static AppInterface frame;
     public static JPanel homeScreen;

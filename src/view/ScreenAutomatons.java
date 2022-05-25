@@ -1,10 +1,25 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,6 +32,14 @@ import controller.afnReader.ReadFile;
 import controller.operation.*;
 import model.*;
 
+
+/**
+ * Painel responsável por apresentar a tela onde serão realizadas as operações.
+ * 
+ * 
+ * @author Pedro Dantas
+ * @author Tiago Santiago
+ */
 public class ScreenAutomatons extends JPanel implements ActionListener {
     private AppInterface controller;
     private String title;

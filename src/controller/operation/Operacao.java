@@ -2,6 +2,13 @@ package controller.operation;
 
 import model.Automato;
 
+
+/**
+ * Classe abstrata a ser herdada pelas operações padrões do sistema.
+ * 
+ * 
+ * @author Pedro Dantas
+ */
 public abstract class Operacao {
     public Automato[] automatons;
     public int maxAutomaton;

@@ -1,7 +1,9 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.Icon;
+import javax.swing.Box;
+import java.awt.Dimension;
 
 public class CustomButton extends JButton {
     

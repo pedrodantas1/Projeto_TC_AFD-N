@@ -1,13 +1,17 @@
 package view;
 
-import controller.operation.concatenacao.GUI;
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.LayoutManager;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.operation.*;
+import controller.operation.concatenacao.GUI;
 
 public class GridButtons extends JPanel implements ActionListener {
     private static LayoutManager layout = new GridBagLayout();
