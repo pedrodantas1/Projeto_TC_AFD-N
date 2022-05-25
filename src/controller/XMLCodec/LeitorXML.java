@@ -1,4 +1,4 @@
-package controller.xmlReader;
+package controller.XMLCodec;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;

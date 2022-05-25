@@ -12,9 +12,9 @@ import org.w3c.dom.Document;
 
 import controller.CriarXML;
 import controller.AFN_AFD.ConverteAutomato;
+import controller.XMLCodec.*;
 import controller.afnReader.ReadFile;
 import controller.operation.*;
-import controller.xmlReader.*;
 import model.*;
 
 public class ScreenAutomatons extends JPanel implements ActionListener {

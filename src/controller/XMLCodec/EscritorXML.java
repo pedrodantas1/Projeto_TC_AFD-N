@@ -1,4 +1,4 @@
-package controller.xmlReader;
+package controller.XMLCodec;
 
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;

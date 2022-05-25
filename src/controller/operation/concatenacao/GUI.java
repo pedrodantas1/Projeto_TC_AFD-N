@@ -87,7 +87,7 @@ public class GUI extends javax.swing.JFrame {
 		frame.setSize(500,450);
 		frame.setLocationByPlatform(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Concatena��o");
+		frame.setTitle("Concatenação");
 		frame.setVisible(true);
 		
 	}
@@ -106,22 +106,23 @@ public class GUI extends javax.swing.JFrame {
         this.pathAutomato2 = concatenacao.buscarArquivos();
     }
 	
-        private void b4ActionPerformed(java.awt.event.ActionEvent evt) {
-            if(pathAutomato1.isEmpty())
-                JOptionPane.showMessageDialog(null,"Por favor adicione o automato numero 1", null, WIDTH);
-            
-            else if(pathAutomato2.isEmpty())
-                JOptionPane.showMessageDialog(null,"Por favor adicione o automato numero 2", null, WIDTH);
-            
-            else if(pathSave.isEmpty())
-                JOptionPane.showMessageDialog(null,"Por favor adicione a pasta de destino do automato Concatenado", null, WIDTH);
-            
-            Concatenacao concatenar = new Concatenacao();
-            
-			try {
-				concatenar.execute(pathAutomato1, pathAutomato2, pathSave);
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				e.printStackTrace();
-			}  
-        }
+	private void b4ActionPerformed(java.awt.event.ActionEvent evt) {
+		if(pathAutomato1.isEmpty())
+			JOptionPane.showMessageDialog(null,"Por favor adicione o automato numero 1", null, WIDTH);
+		
+		else if(pathAutomato2.isEmpty())
+			JOptionPane.showMessageDialog(null,"Por favor adicione o automato numero 2", null, WIDTH);
+		
+		else if(pathSave.isEmpty())
+			JOptionPane.showMessageDialog(null,"Por favor adicione a pasta de destino do automato Concatenado", null, WIDTH);
+		
+		Concatenacao concatenar = new Concatenacao();
+		
+		try {
+			concatenar.execute(pathAutomato1, pathAutomato2, pathSave);
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}  
+	}
+	
 }
