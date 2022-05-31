@@ -397,7 +397,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
                 if (retorno == JFileChooser.SAVE_DIALOG){
                     retorno = extracted();
-                    JOptionPane.showMessageDialog(null, escolhe.getSelectedFile().getAbsolutePath());
                     path = escolhe.getSelectedFile().getAbsolutePath();
                     ReadFile rf = new ReadFile(path);
                     rf.read();

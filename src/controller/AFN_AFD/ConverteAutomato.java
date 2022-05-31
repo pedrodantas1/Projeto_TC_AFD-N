@@ -21,7 +21,6 @@ public class ConverteAutomato {
         Estado inicial = getInicial();
         int id = 0;
         int i = 0;
-        //System.out.println(afn.toString());
 
         if (inicial == null)
             throw new StatesException("Nenhum Estado inicial foi encontrado");
