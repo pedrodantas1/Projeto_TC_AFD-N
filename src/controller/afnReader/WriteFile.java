@@ -18,7 +18,7 @@ public class WriteFile{
 
 public static void save() throws IOException {
     JFileChooser file = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(".jff", ".jff");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Selecinone onde salvar o arquivo", ".jff");
     file.setFileFilter(filter);
 
     file.setDialogType(JFileChooser.SAVE_DIALOG);
