@@ -77,6 +77,9 @@ public class ConverteAutomato {
 
         try {
             WriteFile.save();
+            afn = new Automato();
+            afd = new Automato();
+            estadosAFD.clear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao salvar o arquivo", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
