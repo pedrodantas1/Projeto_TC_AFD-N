@@ -375,7 +375,7 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
     }
 
     private void createBodyScreen(){
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Selecione apenas arquivos jff", "jff");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Selecione o AFN que deseja converter em AFD", "jff");
         JPanel operationPanel = new JPanel(new GridBagLayout());
         operationPanel.setBackground(Color.BLUE);
         operationPanel.setBorder(BorderFactory.createEmptyBorder(0, 125, 0, 125));
@@ -403,8 +403,6 @@ public class ScreenAutomatons extends JPanel implements ActionListener {
 
                     if (retorno == 0)
                         ConverteAutomato.converter();
-                    else
-                        JOptionPane.showMessageDialog(null, "É necessário informar o diretório do arquivo .jff");
 
                     retorno = 1;
                 }
