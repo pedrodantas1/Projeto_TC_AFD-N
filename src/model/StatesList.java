@@ -28,5 +28,11 @@ public class StatesList {
         this.read = read;
     }
 
+    public void imprimir() {
+        for (Estado estado : estados) {
+            System.out.println(estado.toString());
+        }
+    }
+
     
 }

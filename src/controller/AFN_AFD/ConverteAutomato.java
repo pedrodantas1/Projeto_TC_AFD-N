@@ -22,7 +22,6 @@ public class ConverteAutomato {
         int id = 0;
         int i = 0;
 
-
         if (inicial == null)
             throw new StatesException("Nenhum Estado inicial foi encontrado");
         /*
@@ -33,7 +32,7 @@ public class ConverteAutomato {
         estados.add(inicial);
         getEstados(inicial, "lambda");
         estadosAFD.add(i, new StatesList(new ArrayList<Estado>(estados),false));
-        addEstadoAFD(i);
+        addEstadoAFD(i,true);
         i++;
         estados.clear();
 
@@ -65,23 +64,22 @@ public class ConverteAutomato {
                            
                         if (!contains) {
                             estadosAFD.add(i, new StatesList(new ArrayList<Estado>(estados),false));
-                            addEstadoAFD(i);
+                            addEstadoAFD(i,false);
                             addTransicaoAFD(id, i, letra);
                             i++;
                         }
                         //adiciona transicao no afd
                     }
                     estados.clear();
-                }    
-
-                id++;
+                }     
+               id++;
         }while(!allRead());
 
-        //System.out.println(afd.toString());
-        JOptionPane.showConfirmDialog(null, "Informe o local em que deseja salvar o AFD Equivalente!","AVISO",JOptionPane.OK_OPTION);
         try {
             WriteFile.save();
-            JOptionPane.showConfirmDialog(null, "Arquivo Salvo com sucesso!","Concluido!",JOptionPane.OK_OPTION);
+            afn = new Automato();
+            afd = new Automato();
+            estadosAFD.clear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao salvar o arquivo", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
@@ -128,18 +126,20 @@ public class ConverteAutomato {
         }
     }
 
-    private static void addEstadoAFD(int id) {
+    private static void addEstadoAFD(int id,boolean initial) {
         String label ="";
         String name = "q";
         boolean initialState = false;
         boolean finalState = false;
 
         for (Estado estado : estadosAFD.get(id).getEstados()) {
-            if (estado.isInicial()) initialState = true;
+        
+            if (estado.isInicial() && initial) initialState = true;
 
             if (estado.isFinal()) finalState = true;
 
-            label += estado.getName(); 
+            label += "q"+estado.getId(); 
+
         }
 
         afd.addEstado(new Estado(id, name+id, label, initialState, finalState));

@@ -18,14 +18,14 @@ public class WriteFile{
 
 public static void save() throws IOException {
     JFileChooser file = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(".jff", ".jff");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Selecione onde salvar o AFD Equivalente", ".jff");
     file.setFileFilter(filter);
 
     file.setDialogType(JFileChooser.SAVE_DIALOG);
     int j= file.showSaveDialog(null);
     if (j!=1) {
         String arquivo = file.getSelectedFile().getAbsolutePath()+".jff";//pega o nome do arquivo
-        JOptionPane.showMessageDialog(null, file.getSelectedFile().getAbsolutePath());
+
         			
         FileWriter arq = new FileWriter(arquivo);//abre um arquivo para escrita
         PrintWriter gravarArq = new PrintWriter(arq);
